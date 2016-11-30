@@ -42,6 +42,9 @@ CREATE TABLE IF NOT EXISTS `rental` (
   `Agency` int(11) NOT NULL, FOREIGN KEY(Agency) REFERENCES agency(aid),
   `Insurance` varchar(10) NOT NULL,
   `InsurancePrice` int(10) NOT NULL,
+  `StartDate` date NOT NULL,
+  `EndDate` date NOT NULL,
+  `TotalDays` int(11) NOT NULL,
   `TotalPrice` int(11) NOT NULL
 );
 
@@ -49,5 +52,8 @@ DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `ReservationNumber` int(11) NOT NULL PRIMARY KEY,
   `Customer` int(11) NOT NULL, FOREIGN KEY (Customer) REFERENCES customer(uID),
-  `Agency` int(11) NOT NULL, FOREIGN KEY (Agency) REFERENCES agency(aID)
+  `Agency` int(11) NOT NULL, FOREIGN KEY (Agency) REFERENCES agency(aID),
+  `StartDate` date NOT NULL,
+  `EndDate` date NOT NULL,
+  `TotalDays` int(11) NOT NULL
 );
