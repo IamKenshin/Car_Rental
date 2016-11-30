@@ -21,6 +21,8 @@ BEGIN
 	IF OLD.car in (SELECT cID from car) 
 	THEN UPDATE `car` set
 	`status` = 'on hand';
+	UPDATE `customer` set
+	`status` = 'returned';
 	END IF;
 END $$
 
