@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `lname` varchar(255) NOT NULL,
   `age` int(10) NOT NULL,
   `LicenceNumber` varchar(10) NOT NULL,
-  `ccNumber` int(16) NOT NULL,
+  `ccNumber` varchar(16) NOT NULL,
   `rentedcar` int(10) NOT NULL, FOREIGN KEY (rentedcar) REFERENCES car(cID),
   `status` varchar(255) NOT NULL
 );
