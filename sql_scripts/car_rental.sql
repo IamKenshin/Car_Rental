@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `car` (
   `Model` varchar(255) NOT NULL,
   `Year` int(11) NOT NULL,
   `Mileage` int(11) NOT NULL,
-  `Condition` varchar(255) NOT NULL,
+  `vehicleCondition` varchar(255) NOT NULL,
   `Type` varchar(255) NOT NULL,
   `Price` int(10) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `vehicleStatus` varchar(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS `customer`;
