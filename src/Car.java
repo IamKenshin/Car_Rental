@@ -9,8 +9,9 @@ public class Car {
 	private String condition;
 	private String type;
 	private int price;
+	private String status;
 	
-	public Car(int carId, String make, String model, int year, int mileage, String condition, String type, int price) {
+	public Car(int carId, String make, String model, int year, int mileage, String condition, String type, int price, String status) {
 		super();
 		this.carId = carId;
 		this.make = make;
@@ -20,6 +21,7 @@ public class Car {
 		this.condition = condition;
 		this.type = type;
 		this.price = price;
+		this.status = status;
 	}
 	public int getCarId() {
 		return carId;
@@ -68,6 +70,12 @@ public class Car {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getStatus(){
+		return status;
+	}
+	public void setStatus(String status){
+		this.status = status;
 	}
 	
 	

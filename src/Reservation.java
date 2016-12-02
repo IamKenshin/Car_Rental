@@ -1,10 +1,12 @@
+import java.time.LocalDate;
 
 public class Reservation {
 	private int reservationNumber;
 	private int customerId;
 	private int agencyId;
+
 	
-	public Reservation(int reservationNumber, int customerId, int agencyId) {
+	public Reservation(int reservationNumber, int customerId, int agencyId, Dates dates) {
 		super();
 		this.reservationNumber = reservationNumber;
 		this.customerId = customerId;
