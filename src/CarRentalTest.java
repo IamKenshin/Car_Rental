@@ -16,6 +16,7 @@ public class CarRentalTest {
 		String condition = "new";
 		String type = "type";
 		int price = 50;
+		String status = "onHand";
 		
 		int customerId = 1;
 		String fname = "fname";
@@ -23,7 +24,7 @@ public class CarRentalTest {
 		int age = 30;
 		String licenceNumber = "abc123";
 		String ccNumber = "1234123412341234";
-		String status = "rented";
+		
 		
 		int contractNumber = 1;
 		String insurance = "aaa";
@@ -33,10 +34,12 @@ public class CarRentalTest {
 		int reservationNumber = 1;
 		
 		Agency agency = new Agency(agencyId, address, city, zip);
-		Car car = new Car(carId, make, model, year, mileage, condition, type, price);
+		Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
 		Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, car, status);
 		Rental rental = new Rental(contractNumber, customer.getCustomerId(), car.getCarId(), agencyId, insurance, insurancePrice, totalPrice);
-		Reservation reservation = new Reservation(reservationNumber, customer.getCustomerId(), agency.getAgencyID());
+//		Reservation reservation = new Reservation(reservationNumber, customer.getCustomerId(), agency.getAgencyID()); 
+		
+		
 		
 		
 

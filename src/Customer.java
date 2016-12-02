@@ -23,6 +23,21 @@ public class Customer {
 		this.status = status;
 	}
 	
+	
+	//should a customer be associated with the type of car?
+	//customer should be just customers' information. 
+	public Customer(int customerId, String fname, String lname, int age, String licenceNumber, String ccNumber) {
+		super();
+		this.customerId = customerId;
+		this.fname = fname;
+		this.lname = lname;
+		this.age = age;
+		this.licenceNumber = licenceNumber;
+		this.ccNumber = ccNumber;
+	}
+
+
+
 	public int getCustomerId() {
 		return customerId;
 	}
