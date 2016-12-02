@@ -43,13 +43,16 @@ CREATE TABLE IF NOT EXISTS `rental` (
   `ContractNumber` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Customer` int(11) NOT NULL, FOREIGN KEY (Customer) REFERENCES customer(uid),
   `Car` int(11) NOT NULL, FOREIGN KEY (Car) REFERENCES car(cid),
+  'MilesOut' int(11) NOT NULL,
+  'MilesIn' int(11) NOT NULL,
   `Agency` int(11) NOT NULL, FOREIGN KEY(Agency) REFERENCES agency(aid),
   `Insurance` varchar(10) NOT NULL,
   `InsurancePrice` int(10) NOT NULL,
   `StartDate` date NOT NULL,
   `EndDate` date NOT NULL,
   `TotalDays` int(11) NOT NULL,
-  `TotalPrice` int(11) NOT NULL
+  `TotalPrice` int(11) NOT NULL,
+  'Status' varchar(10) default 'onRent'
 );
 
 DROP TABLE IF EXISTS `reservation`;
