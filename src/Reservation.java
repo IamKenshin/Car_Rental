@@ -4,7 +4,7 @@ public class Reservation {
 	private int reservationNumber;
 	private int customerId;
 	private int agencyId;
-
+	private Dates dates;
 	
 	public Reservation(int reservationNumber, int customerId, int agencyId, Dates dates) {
 		super();
