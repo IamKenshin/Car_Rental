@@ -65,7 +65,8 @@ public class DataAccessTester {
 		//System.out.println(c.getCustomerId());
 		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		//System.out.println(c.getStatus());
-		dao.rentalCheckOut(rental, car2, dates); //works
+		//dao.rentalCheckOut(rental, car2, dates); //works
+		dao.updateAgency(1, "456 Faek Street", "San Jose", 95192); //works
 		//dao.rentalCheckIn(1, 150);
 		//dao.cancelReservation(2); //works
 //		List res = dao.getAllActiveRentals();

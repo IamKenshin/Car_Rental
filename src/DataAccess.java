@@ -744,6 +744,24 @@ public class DataAccess {
 		
 	}
 	
+	public void updateAgency(int aID, String address, String city, int zip){
+		try{
+			String sql = "UPDATE agency SET Address=?, City=?, Zip=? WHERE aID=?";
+			
+			PreparedStatement pS = myConn.prepareStatement(sql);
+			pS.setString(1, address);
+			pS.setString(2,  city);
+			pS.setInt(3, zip);
+			pS.setInt(4, aID);
+			int count = pS.executeUpdate();
+			if (count != 0)
+				System.out.println("updated with new agency information.");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Update existing reservation with newReservation object
 	 * @param reservationId - existing reservationId
