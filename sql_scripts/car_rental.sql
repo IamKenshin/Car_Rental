@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `car` (
   `vehicleCondition` varchar(255) NOT NULL,
   `Type` varchar(255) NOT NULL,
   `Price` int(10) NOT NULL,
-  `vehicleStatus` varchar(255) NOT NULL
+  `CarStatus` varchar(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS `customer`;
@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `age` int(10) NOT NULL,
   `LicenceNumber` varchar(10) NOT NULL,
   `ccNumber` varchar(16) NOT NULL,
-  `rentedcar` int(10) NOT NULL, FOREIGN KEY (rentedcar) REFERENCES car(cID),
-  `status` varchar(255) NOT NULL
+  `CustomerStatus` varchar(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS `rental`;
@@ -52,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `rental` (
   `EndDate` date NOT NULL,
   `TotalDays` int(11) NOT NULL,
   `TotalPrice` int(11) NOT NULL,
-  'Status' varchar(10) default 'onRent'
+  'RentalStatus' varchar(10) default 'onRent'
 );
 
 DROP TABLE IF EXISTS `reservation`;
