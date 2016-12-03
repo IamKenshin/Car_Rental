@@ -3,14 +3,17 @@
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.naming.directory.SearchResult;
+
 import java.time.temporal.ChronoUnit;
 //import DataAccess;
 
 public class DataAccessTester {
 	public static void main(String[] args) throws Exception {
 		
-		int customerId = 5;
-		String fname = "rentalname";
+		int customerId = 2;
+		String fname = "testingRental";
 		String lname = "rentallastname";
 		int age = 21;
 		String licenceNumber = "6666";
@@ -22,16 +25,16 @@ public class DataAccessTester {
 		int year = 2016;
 		int mileage = 5;
 		String condition = "new";
-		String type = "type";
+		String type = "A";
 		int price = 50;
 //		String status = "onHand";
 		int insurancePrice;
-		String insurance = "Yes";
+		String insurance = "No";
 		insurancePrice = (insurance == "Yes")?15:0; 	//if insurance=yes, insurance price is 15. else 0
 		
 		int agencyId = 1;
-		LocalDate startDate = LocalDate.of(2016, 12, 07);
-		LocalDate endDate = LocalDate.of(2016, 12, 17);
+		LocalDate startDate = LocalDate.of(2016, 11, 23);
+		LocalDate endDate = LocalDate.of(2016, 11, 24);
 		
 		int contractNumber = 1; //no purpose other than creating object
 		
@@ -39,11 +42,11 @@ public class DataAccessTester {
 		int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 		String status = "onRent";
 				
-		Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber);
+		Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, status);
 		Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
 		
 		Dates dates = new Dates(startDate, endDate, totalDays);
-		Reservation reservation = new Reservation(1, customerId, agencyId, dates);
+		Reservation reservation = new Reservation(1, 2, agencyId, dates);
 		
 		int totalPrice = (car.getPrice() * totalDays) + (insurancePrice * totalDays);
 		Rental rental = new Rental(contractNumber, customerId, car, agencyId, insurance, insurancePrice, dates, totalPrice, status);
@@ -53,8 +56,26 @@ public class DataAccessTester {
 //		dao.addCar(car);			//works
 //		dao.addReservation(customerId, agencyId, dates);	//works
 		
-//		dao.addRentalCheckOut(rental, car, dates);
-		dao.updateRentalCheckIn(2, 150);
+//		dao.rentalCheckOut(rental, car, dates);
+//		dao.rentalCheckIn(2, 150);
+		
+//		List res = dao.getAllActiveRentals();
+//		for (int i = 0; i < res.size(); i++){
+//			System.out.println(res.get(i).toString());
+//		}
+		
+//		test searchCar
+//		Car c = dao.searchCar(2);
+//		System.out.println(c.toString());
+		
+		//test update systems
+//		System.out.println(dao.searchReservation(3));
+//		dao.updateReservation(3, reservation);
+//		System.out.println(dao.searchReservation(3));
+		
+//		System.out.println(dao.searchRental(8));
+//		System.out.println(dao.searchCustomer(2));
+		
 	}
 
 }
