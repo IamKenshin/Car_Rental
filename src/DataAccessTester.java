@@ -41,7 +41,8 @@ public class DataAccessTester {
 		//calculate totalDays by changing LocalDate to epoch times and subtracting them
 		int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 		String status = "onRent";
-				
+		
+		int	underageFee = 30;	
 		Customer customer = new Customer(fname, lname, age, licenceNumber, ccNumber, status);
 		Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
 		
@@ -52,6 +53,10 @@ public class DataAccessTester {
 		DataAccess dao = new DataAccess();
 		Customer c = dao.searchCustomer(1);
 		Car car2 = dao.searchCar(1);
+		if (dao.under25(c.getCustomerId()))
+		{
+			totalPrice = totalPrice + underageFee;
+		}
 		Rental rental = new Rental(contractNumber, c.getCustomerId(), car2, agencyId, insurance, insurancePrice, dates, totalPrice, status);
 //		dao.getAllReservations();		
 		//dao.addCustomer(customer);	//works
@@ -60,8 +65,8 @@ public class DataAccessTester {
 		//System.out.println(c.getCustomerId());
 		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		//System.out.println(c.getStatus());
-		//dao.rentalCheckOut(rental, car2, dates); //works
-		dao.rentalCheckIn(1, 150);
+		dao.rentalCheckOut(rental, car2, dates); //works
+		//dao.rentalCheckIn(1, 150);
 		//dao.cancelReservation(2); //works
 //		List res = dao.getAllActiveRentals();
 //		for (int i = 0; i < res.size(); i++){

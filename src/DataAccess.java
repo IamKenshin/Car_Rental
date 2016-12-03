@@ -547,6 +547,23 @@ public class DataAccess {
 		return customer;
 	}
 	
+	public boolean under25(int uid) {
+		
+		try{
+			String sql = "select age from customer where uid = " + uid;
+			ResultSet rs = myConn.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				int age = rs.getInt("age");
+				if (age < 25)
+					return true;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
 	
 	/**
 	 * check if a car with given carId exists or not. 
