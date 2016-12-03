@@ -760,5 +760,21 @@ public class DataAccess {
 		
 
 	}
+	/**
+	 * Deletes the reservation from the reservation table
+	 * @param reservationNumber The reservation id to be deleted.
+	 */
+	public void cancelReservation(int reservationNumber) {
+		try {
+			String sql = "DELETE FROM reservation WHERE ReservationNumber =?";
+			PreparedStatement pS = myConn.prepareStatement(sql);
+			pS.setInt(1, reservationNumber);
+			
+			pS.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

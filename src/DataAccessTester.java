@@ -60,9 +60,9 @@ public class DataAccessTester {
 		//System.out.println(c.getCustomerId());
 		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		//System.out.println(c.getStatus());
-		//dao.rentalCheckOut(rental, car2, dates);
+		//dao.rentalCheckOut(rental, car2, dates); //works
 		dao.rentalCheckIn(1, 150);
-		
+		//dao.cancelReservation(2); //works
 //		List res = dao.getAllActiveRentals();
 //		for (int i = 0; i < res.size(); i++){
 //			System.out.println(res.get(i).toString());
