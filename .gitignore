@@ -49,3 +49,4 @@ Temporary Items
 .settings/org.eclipse.jdt.core.prefs
 .project
 /bin/
+*.properties
