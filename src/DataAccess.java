@@ -452,7 +452,7 @@ public class DataAccess {
 	public void rentalCheckIn(int contractNumber, int milesIn){
 		try{
 			String sql = "UPDATE rental set "+
-						"MilesIn = ?, status = ? " + 
+						"MilesIn = ?, RentalStatus = ? " + 
 						"WHERE ContractNumber = ?";
 			PreparedStatement prepStmt = myConn.prepareStatement(sql);
 			

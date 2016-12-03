@@ -49,18 +49,19 @@ public class DataAccessTester {
 		Reservation reservation = new Reservation(1, 2, agencyId, dates);
 		
 		int totalPrice = (car.getPrice() * totalDays) + (insurancePrice * totalDays);
-		Rental rental = new Rental(contractNumber, customerId, car, agencyId, insurance, insurancePrice, dates, totalPrice, status);
 		DataAccess dao = new DataAccess();
+		Customer c = dao.searchCustomer(1);
+		Car car2 = dao.searchCar(1);
+		Rental rental = new Rental(contractNumber, c.getCustomerId(), car2, agencyId, insurance, insurancePrice, dates, totalPrice, status);
 //		dao.getAllReservations();		
 		//dao.addCustomer(customer);	//works
 		//dao.addCar(car);			//works
 		//System.out.println(customer.getCustomerId());
-		Customer c = dao.searchCustomer(1);
 		//System.out.println(c.getCustomerId());
-		dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
-		
-//		dao.rentalCheckOut(rental, car, dates);
-//		dao.rentalCheckIn(2, 150);
+		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
+		//System.out.println(c.getStatus());
+		//dao.rentalCheckOut(rental, car2, dates);
+		dao.rentalCheckIn(1, 150);
 		
 //		List res = dao.getAllActiveRentals();
 //		for (int i = 0; i < res.size(); i++){
