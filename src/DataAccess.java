@@ -547,21 +547,26 @@ public class DataAccess {
 		return customer;
 	}
 	
+	/**
+	 * Checks if the customer is under 25
+	 * @param uid the customer's id
+	 * @return under25 boolean value checking if customer is under 25
+	 */
 	public boolean under25(int uid) {
-		
+		boolean under25 = false;
 		try{
 			String sql = "select age from customer where uid = " + uid;
 			ResultSet rs = myConn.createStatement().executeQuery(sql);
 			while(rs.next()) {
 				int age = rs.getInt("age");
 				if (age < 25)
-					return true;
+					under25 = true;
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return under25;
 		
 	}
 	
@@ -744,6 +749,13 @@ public class DataAccess {
 		
 	}
 	
+	/**
+	 * update existing agency information.
+	 * @param aID the agency's id
+	 * @param address the street of the agency
+	 * @param city the city of the agency
+	 * @param zip the zip code of the agency
+	 */
 	public void updateAgency(int aID, String address, String city, int zip){
 		try{
 			String sql = "UPDATE agency SET Address=?, City=?, Zip=? WHERE aID=?";

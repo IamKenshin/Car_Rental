@@ -15,7 +15,7 @@ public class DataAccessTester {
 		int customerId = 2;
 		String fname = "testingRental";
 		String lname = "rentallastname";
-		int age = 21;
+		int age = 25;
 		String licenceNumber = "6666";
 		String ccNumber = "33";
 		
@@ -51,7 +51,7 @@ public class DataAccessTester {
 		
 		int totalPrice = (car.getPrice() * totalDays) + (insurancePrice * totalDays);
 		DataAccess dao = new DataAccess();
-		Customer c = dao.searchCustomer(1);
+		Customer c = dao.searchCustomer(2);
 		Car car2 = dao.searchCar(1);
 		if (dao.under25(c.getCustomerId()))
 		{
@@ -65,8 +65,8 @@ public class DataAccessTester {
 		//System.out.println(c.getCustomerId());
 		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		//System.out.println(c.getStatus());
-		//dao.rentalCheckOut(rental, car2, dates); //works
-		dao.updateAgency(1, "456 Faek Street", "San Jose", 95192); //works
+		dao.rentalCheckOut(rental, car2, dates); //works
+		//dao.updateAgency(1, "456 Faek Street", "San Jose", 95192); //works
 		//dao.rentalCheckIn(1, 150);
 		//dao.cancelReservation(2); //works
 //		List res = dao.getAllActiveRentals();
