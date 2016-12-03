@@ -1,24 +1,84 @@
+import java.time.LocalDate;
 
 public class Rental {
 	
 	private int contractNumber;
 	private int customerId;
 	private int carId;
+	private int milesOut;
+	private int milesIn;
 	private int agencyId;
 	private String insurance;
 	private int insurancePrice;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private int totalDays;
 	private int totalPrice;
+	private String status;
 	
-	public Rental(int contractNumber, int customerId, int carId, int agencyId, String insurance,
-			int insurancePrice, int totalPrice) {
-		super();
-		this.contractNumber = contractNumber;
-		this.customerId = customerId;
-		this.carId = carId;
-		this.agencyId = agencyId;
-		this.insurance = insurance;
+	public Rental(int contractNumber, int customerId, Car car, int agencyId,
+			String insurance,int insurancePrice, Dates dates, int totalPrice, String status) {
+	super();
+	this.contractNumber = contractNumber;
+	this.customerId = customerId;
+	this.carId = car.getCarId();
+	this.milesOut = car.getMileage();
+	this.agencyId = agencyId;
+	this.insurance = insurance;
+	if (this.insurance == "Yes"){
 		this.insurancePrice = insurancePrice;
-		this.totalPrice = totalPrice;
+	} else if (this.insurance == "No"){
+		this.insurancePrice = 0;
+	}
+	this.startDate = dates.getStartDate();
+	this.endDate = dates.getEndDate();
+	this.totalDays = dates.getTotalDays();
+	this.totalPrice = totalPrice;
+	this.status = status;
+}
+	
+	public int getMilesOut() {
+		return milesOut;
+	}
+
+	public void setMilesOut(int milesOut) {
+		this.milesOut = milesOut;
+	}
+
+	public int getMilesIn() {
+		return milesIn;
+	}
+
+	public void setMilesIn(int milesIn) {
+		this.milesIn = milesIn;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setAgencyId(int agencyId) {
+		this.agencyId = agencyId;
 	}
 	
 	public int getContractNumber() {
@@ -27,16 +87,16 @@ public class Rental {
 	public void setContractNumber(int contractNumber) {
 		this.contractNumber = contractNumber;
 	}
-	public int getcustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setcustomerId(int customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	public int getcarId() {
+	public int getCarId() {
 		return carId;
 	}
-	public void setcarId(int carId) {
+	public void setCarId(int carId) {
 		this.carId = carId;
 	}
 	public int getAgencyId() {

@@ -36,7 +36,7 @@ public class CarRentalTest {
 		Agency agency = new Agency(agencyId, address, city, zip);
 		Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
 		Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, car, status);
-		Rental rental = new Rental(contractNumber, customer.getCustomerId(), car.getCarId(), agencyId, insurance, insurancePrice, totalPrice);
+//		Rental rental = new Rental(contractNumber, customer.getCustomerId(), car.getCarId(), agencyId, insurance, insurancePrice, totalPrice);
 //		Reservation reservation = new Reservation(reservationNumber, customer.getCustomerId(), agency.getAgencyID()); 
 		
 		

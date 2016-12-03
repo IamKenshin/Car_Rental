@@ -214,6 +214,69 @@ public class DataAccess {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Writes to the rental database with the information about rental, car, and dates
+	 * @param rental object that contains customerid, insurnace
+	 * @param car contains carid, mileage
+	 * @param dates contains checkout date, return date, total days
+	 * @return contractNumber 
+	 */
+	public int addRentalCheckOut(Rental rental, Car car, Dates dates){
+		int insertedContractNumber = 0;
+		try{
+			String sql = "INSERT INTO rental" +
+						 "(Customer, Car, MilesOut, MilesIn, Agency, Insurance, InsurancePrice, "
+						 + "StartDate, EndDate, TotalDays, TotalPrice) VALUES" +
+						 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
+			stmt.setInt(1, rental.getCustomerId());
+			stmt.setInt(2, rental.getCarId());
+			stmt.setInt(3, car.getMileage());
+			stmt.setInt(4, 0);	//set milesin as 0 at checkout. this is populated in rentalcheckin
+			stmt.setInt(5, rental.getAgencyId());
+			stmt.setString(6, rental.getInsurance());
+			stmt.setInt(7, rental.getInsurancePrice());
+			stmt.setDate(8, java.sql.Date.valueOf(dates.getStartDate()));
+			stmt.setDate(9, java.sql.Date.valueOf(dates.getEndDate()));
+			stmt.setInt(10, dates.getTotalDays());
+			stmt.setInt(11, rental.getTotalPrice());
+			
+			int count = stmt.executeUpdate();
+			if (count != 0)
+				System.out.println("added new rental");
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next())
+				insertedContractNumber = rs.getInt(1);
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return insertedContractNumber;
+	}
+	
+	/**
+	 * updates the rental table with milesIn information and changes status to returned
+	 * @param contractNumber contract that is being modified
+	 * @param milesIn updated miles from the vehicle
+	 */
+	public void updateRentalCheckIn(int contractNumber, int milesIn){
+		try{
+			String sql = "UPDATE rental set "+
+						"MilesIn = ?, status = ? " + 
+						"WHERE ContractNumber = ?";
+			PreparedStatement stmt = myConn.prepareStatement(sql);
+			
+			stmt.setInt(1, milesIn);
+			stmt.setString(2, "Returned");
+			stmt.setInt(3, contractNumber);
+			
+			int count = stmt.executeUpdate();
+			if (count != 0)
+				System.out.println("closed the rental");
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
 	
 	
 //
