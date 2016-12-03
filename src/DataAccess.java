@@ -173,7 +173,7 @@ public class DataAccess {
 		
 		try{
 			String sql = "INSERT INTO car" + 
-						 "(make, model, year, mileage, vehicleCondition, type, price, vehicleStatus) VALUES " +
+						 "(make, model, year, mileage, vehicleCondition, type, price, CarStatus) VALUES " +
 						 "(?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = myConn.prepareStatement(sql);
 			stmt.setString(1, make);
