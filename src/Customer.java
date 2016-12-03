@@ -1,40 +1,20 @@
 
 public class Customer {
 	
-	private int customerId;
-	private String fname;
-	private String lname;
-	private int age;
-	private String licenceNumber;
-	private String ccNumber; //String or long?
-	private Car rentedCar;
-	private String status;
+	private int customerId, age;
+	private String fName, lName, licenceNumber, ccNumber, customerStatus;
 	
-	public Customer(int customerId, String fname, String lname, int age, String licenceNumber, String ccNumber,
-			Car rentedCar, String status) {
+	public Customer(int customerId, String fName, String lName, int age, String licenceNumber, String ccNumber, String status) {
 		super();
 		this.customerId = customerId;
-		this.fname = fname;
-		this.lname = lname;
+		this.fName = fName;
+		this.lName = lName;
 		this.age = age;
 		this.licenceNumber = licenceNumber;
 		this.ccNumber = ccNumber;
-		this.rentedCar = rentedCar;
-		this.status = status;
+		this.customerStatus = status;
 	}
 	
-	
-	//should a customer be associated with the type of car?
-	//customer should be just customers' information. 
-	public Customer(int customerId, String fname, String lname, int age, String licenceNumber, String ccNumber) {
-		super();
-		this.customerId = customerId;
-		this.fname = fname;
-		this.lname = lname;
-		this.age = age;
-		this.licenceNumber = licenceNumber;
-		this.ccNumber = ccNumber;
-	}
 
 
 
@@ -45,16 +25,16 @@ public class Customer {
 		this.customerId = userID;
 	}
 	public String getFname() {
-		return fname;
+		return fName;
 	}
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setFname(String fName) {
+		this.fName = fName;
 	}
 	public String getLname() {
-		return lname;
+		return lName;
 	}
-	public void setLname(String lname) {
-		this.lname = lname;
+	public void setLname(String lName) {
+		this.lName = lName;
 	}
 	public int getAge() {
 		return age;
@@ -74,17 +54,15 @@ public class Customer {
 	public void setCcNumber(String ccNumber) {
 		this.ccNumber = ccNumber;
 	}
-	public Car getRentedCar() {
-		return rentedCar;
-	}
-	public void setRentedCar(Car rentedCar) {
-		this.rentedCar = rentedCar;
-	}
 	public String getStatus() {
-		return status;
+		return customerStatus;
 	}
 	public void setStatus(String status) {
-		this.status = status;
+		this.customerStatus = status;
+	}
+	public String toString(){
+		return customerId  + " | " + fName  + " | " + lName  + " | " + age  + " | " + licenceNumber  + " | " +
+							ccNumber  + " | " + customerStatus;
 	}
 	
 	

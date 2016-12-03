@@ -1,27 +1,20 @@
 
 public class Car {
 	
-	private int carId;
-	private String make;
-	private String model;
-	private int year;
-	private int mileage;
-	private String condition;
-	private String type;
-	private int price;
-	private String status;
+	private int carId, year, mileage, price;
+	private String make, model, vehicleCondition, type, carStatus;
 	
-	public Car(int carId, String make, String model, int year, int mileage, String condition, String type, int price, String status) {
+	public Car(int carId, String make, String model, int year, int mileage, String vehicleCondition, String type, int price, String carStatus) {
 		super();
 		this.carId = carId;
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.mileage = mileage;
-		this.condition = condition;
+		this.vehicleCondition = vehicleCondition;
 		this.type = type;
 		this.price = price;
-		this.status = status;
+		this.carStatus = carStatus;
 	}
 	public int getCarId() {
 		return carId;
@@ -54,10 +47,10 @@ public class Car {
 		this.mileage = mileage;
 	}
 	public String getCondition() {
-		return condition;
+		return vehicleCondition;
 	}
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setCondition(String vehicleCondition) {
+		this.vehicleCondition = vehicleCondition;
 	}
 	public String getType() {
 		return type;
@@ -72,10 +65,16 @@ public class Car {
 		this.price = price;
 	}
 	public String getStatus(){
-		return status;
+		return carStatus;
 	}
-	public void setStatus(String status){
-		this.status = status;
+	public void setStatus(String carStatus){
+		this.carStatus = carStatus;
+	}
+	@Override
+	public String toString() {
+		return carId + " | " + make + " | " + model + " | " + year + " | " + mileage + " | " + vehicleCondition 
+				+ " | " + type + " | " + price + " | " + carStatus;
+		
 	}
 	
 	

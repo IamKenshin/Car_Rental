@@ -2,19 +2,10 @@ import java.time.LocalDate;
 
 public class Rental {
 	
-	private int contractNumber;
-	private int customerId;
-	private int carId;
-	private int milesOut;
-	private int milesIn;
-	private int agencyId;
-	private String insurance;
-	private int insurancePrice;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private int totalDays;
-	private int totalPrice;
-	private String status;
+	private int contractNumber, customerId, carId, milesOut, milesIn,
+				agencyId, insurancePrice, totalDays, totalPrice, year;
+	private String fName, lName, insurance, status, make, model;
+	private LocalDate startDate, endDate;
 	
 	public Rental(int contractNumber, int customerId, Car car, int agencyId,
 			String insurance,int insurancePrice, Dates dates, int totalPrice, String status) {
@@ -37,6 +28,33 @@ public class Rental {
 	this.status = status;
 }
 	
+	//this contructor is used by searchReservation or getAllReservation where it grabs a bunch of data
+	//and needs to initialize them before printing it
+	public Rental(int contractNumber, int year, int milesOut, int milesIn, int agencyId, int totalDays, int totalPrice,
+			String fName, String lName, String status, String make, String model, LocalDate startDate,
+			LocalDate endDate) {
+		super();
+		this.contractNumber = contractNumber;
+		this.year = year;
+		this.milesOut = milesOut;
+		this.milesIn = milesIn;
+		this.agencyId = agencyId;
+		this.totalDays = totalDays;
+		this.totalPrice = totalPrice;
+		this.fName = fName;
+		this.lName = lName;
+		this.status = status;
+		this.make = make;
+		this.model = model;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+	
+	public String toString(){
+		return contractNumber  + " | " + fName  + " " + lName  + " | " + year  + " " + make + " " +  model + " | " + 
+				milesOut  + " - " + milesIn  + " | " + startDate + " till " +  endDate  + " | " + totalDays  + "days | $" + totalPrice 
+				 + " | " + status;
+	}
 	public int getMilesOut() {
 		return milesOut;
 	}
