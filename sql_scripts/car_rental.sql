@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `carrental`;
-USE `carrental`;
+CREATE DATABASE IF NOT EXISTS `car_rental`;
+USE `car_rental`;
 
 DROP TABLE IF EXISTS `agency`;
 CREATE TABLE IF NOT EXISTS `agency` (
