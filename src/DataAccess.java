@@ -197,7 +197,8 @@ public class DataAccess {
 				String ccNumber = myRs.getString("ccNumber");
 				String status = myRs.getString("CustomerStatus");
 				
-				Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, status);
+				Customer customer = new Customer(fname, lname, age, licenceNumber, ccNumber, status);
+				customer.setUserID(customerId);
 				list.add(customer);
 			}
 		} catch (SQLException e){
@@ -526,6 +527,7 @@ public class DataAccess {
 			myRs = prepStmt.executeQuery();
 			
 			while (myRs.next()){
+				int uid = myRs.getInt("uid");
 				String fname = myRs.getString("fname");
 				String lname = myRs.getString("lname");
 				int age = myRs.getInt("age");
@@ -533,7 +535,8 @@ public class DataAccess {
 				String ccNumber = myRs.getString("ccNumber");
 				String status = myRs.getString("CustomerStatus");
 				
-				customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, status);
+				customer = new Customer(fname, lname, age, licenceNumber, ccNumber, status);
+				customer.setUserID(uid);
 			}
 		} catch (SQLException e){
 			e.printStackTrace();

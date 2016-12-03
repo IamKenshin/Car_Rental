@@ -4,9 +4,8 @@ public class Customer {
 	private int customerId, age;
 	private String fName, lName, licenceNumber, ccNumber, customerStatus;
 	
-	public Customer(int customerId, String fName, String lName, int age, String licenceNumber, String ccNumber, String status) {
+	public Customer(String fName, String lName, int age, String licenceNumber, String ccNumber, String status) {
 		super();
-		this.customerId = customerId;
 		this.fName = fName;
 		this.lName = lName;
 		this.age = age;

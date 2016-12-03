@@ -42,7 +42,7 @@ public class DataAccessTester {
 		int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 		String status = "onRent";
 				
-		Customer customer = new Customer(customerId, fname, lname, age, licenceNumber, ccNumber, status);
+		Customer customer = new Customer(fname, lname, age, licenceNumber, ccNumber, status);
 		Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
 		
 		Dates dates = new Dates(startDate, endDate, totalDays);
@@ -52,9 +52,12 @@ public class DataAccessTester {
 		Rental rental = new Rental(contractNumber, customerId, car, agencyId, insurance, insurancePrice, dates, totalPrice, status);
 		DataAccess dao = new DataAccess();
 //		dao.getAllReservations();		
-//		dao.addCustomer(customer));	//works
-//		dao.addCar(car);			//works
-//		dao.addReservation(customerId, agencyId, dates);	//works
+		//dao.addCustomer(customer);	//works
+		//dao.addCar(car);			//works
+		//System.out.println(customer.getCustomerId());
+		Customer c = dao.searchCustomer(1);
+		//System.out.println(c.getCustomerId());
+		dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		
 //		dao.rentalCheckOut(rental, car, dates);
 //		dao.rentalCheckIn(2, 150);
