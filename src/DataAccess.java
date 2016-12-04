@@ -1,8 +1,6 @@
 import java.util.*;
-import java.util.Date;
 import java.time.LocalDate;
 import java.sql.*;
-//import java.sql.Date;
 import java.io.*;
 
 
@@ -41,11 +39,22 @@ public class DataAccess {
 		// connect to database
 		try {
 			myConn = DriverManager.getConnection(dburl, user, password);
+			if (myConn != null)
+				System.out.println("DB connection successful to: " + dburl);
+			else
+				System.out.println("DB Connection failed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
+				String sqlMessage = e.getMessage();
+		      String sqlState = e.getSQLState();
+		      int vendorCode = e.getErrorCode();
+		      System.err.println("Exception occurred:");
+		      System.err.println("Message: " + sqlMessage);
+		      System.err.println("SQL state: " + sqlState);
+		      System.err.println("Vendor code: " + vendorCode + "\n----------------");
 		}
 
-		System.out.println("DB connection successful to: " + dburl);
+		
 	}
 	
 	/**
