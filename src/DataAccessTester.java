@@ -1,13 +1,6 @@
 
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Scanner;
-
-import javax.naming.directory.SearchResult;
-
-import java.time.temporal.ChronoUnit;
-//import DataAccess;
 
 public class DataAccessTester {
 	public static void main(String[] args) throws Exception {
@@ -33,8 +26,8 @@ public class DataAccessTester {
 		insurancePrice = (insurance == "Yes")?15:0; 	//if insurance=yes, insurance price is 15. else 0
 		
 		int agencyId = 1;
-		LocalDate startDate = LocalDate.of(2016, 11, 23);
-		LocalDate endDate = LocalDate.of(2016, 11, 24);
+		LocalDate startDate = LocalDate.of(2016, 12, 25);
+		LocalDate endDate = LocalDate.of(2016, 12, 26);
 		
 		int contractNumber = 1; //no purpose other than creating object
 		
@@ -65,14 +58,23 @@ public class DataAccessTester {
 		//System.out.println(c.getCustomerId());
 		//dao.addReservation(c.getCustomerId(), agencyId, dates);	//works
 		//System.out.println(c.getStatus());
-		dao.rentalCheckOut(rental, car2, dates); //works
+//		dao.rentalCheckOut(rental, car2, dates); //works
 		//dao.updateAgency(1, "456 Faek Street", "San Jose", 95192); //works
 		//dao.rentalCheckIn(1, 150);
 		//dao.cancelReservation(2); //works
-//		List res = dao.getAllActiveRentals();
+//		List res = dao.getAllReservations();
 //		for (int i = 0; i < res.size(); i++){
 //			System.out.println(res.get(i).toString());
 //		}
+//		
+//		dao.cancelReservation(5);
+//		
+//		List res2 = dao.getAllReservations();
+//		for (int i = 0; i < res2.size(); i++){
+//			System.out.println(res2.get(i).toString());
+//		}
+		
+		//dao.cancelReservation(reservationNumber);
 		
 //		test searchCar
 //		Car c = dao.searchCar(2);
@@ -85,6 +87,8 @@ public class DataAccessTester {
 		
 //		System.out.println(dao.searchRental(8));
 //		System.out.println(dao.searchCustomer(2));
+		
+		
 		
 	}
 

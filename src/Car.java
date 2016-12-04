@@ -15,6 +15,7 @@ public class Car {
 		this.type = type;
 		this.price = price;
 		this.carStatus = carStatus;
+		
 	}
 	public int getCarId() {
 		return carId;
