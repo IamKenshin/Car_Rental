@@ -350,7 +350,7 @@ public class DataAccess {
 	 * Adds a items from Car object to the database using prepared statements
 	 * @param car
 	 */
-	public void addCar(Car car){
+	public int addCar(Car car){
 		String make = car.getMake();
 		String model = car.getModel();
 		int year = car.getYear();
@@ -364,7 +364,7 @@ public class DataAccess {
 			String sql = "INSERT INTO car" + 
 						 "(make, model, year, mileage, vehicleCondition, type, price, CarStatus) VALUES " +
 						 "(?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement prepStmt = myConn.prepareStatement(sql);
+			PreparedStatement prepStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			prepStmt.setString(1, make);
 			prepStmt.setString(2, model);
 			prepStmt.setInt(3, year);
@@ -377,10 +377,14 @@ public class DataAccess {
 			int count = prepStmt.executeUpdate();
 			if (count != 0)
 				System.out.println("added new car");
+			ResultSet rs = prepStmt.getGeneratedKeys();
+			if (rs.next())
+				return rs.getInt(1);
 			
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
+		return -1;
 	}
 	
 	/**

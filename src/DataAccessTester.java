@@ -86,7 +86,7 @@ public class DataAccessTester {
 		
 //		System.out.println(dao.searchRental(8));
 //		System.out.println(dao.searchCustomer(2));
-		
+		dao.updateCustomer(5, new Customer("Jake", "Snake", 90, "567890", "4567890", "Test"));
 		
 		
 	}
