@@ -27,7 +27,7 @@ public class gui {
 	private JLabel customer_licNum_label;
 	private JLabel customer_ccNum_label;
 	private JLabel customer_id_label;
-	private JButton customer_modify_button;
+	//private JButton customer_modify_button;
 	private JTextField car_year_text;
 	private JTextField car_make_text;
 	private JTextField car_model_text;
@@ -35,6 +35,8 @@ public class gui {
 	private JTextField car_condition_text;
 	private JTextField car_status_text;
 	private JTextField car_id_text;
+	private JTextField car_price_text;
+	private JTextField car_type_text;
 	
 			
 
@@ -77,8 +79,8 @@ public class gui {
 				String fName = customer_fName_text.getText();
 				String lName = customer_lName_text.getText();
 				int age = Integer.parseInt(customer_age_text.getText());
-				String licenceNumber = customer_licNum_label.getText();
-				String ccNumber = customer_ccNum_label.getText();
+				String licenceNumber = customer_licNum_text.getText();
+				String ccNumber = customer_ccNum_text.getText();
 				String customerStatus = "Reservation"; 				//customer is going to be reservation status in the beginning
 				Customer customer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
 				int customerId = dao.addCustomer(customer);
@@ -90,8 +92,28 @@ public class gui {
 				//JOptionPane.showMessageDialog(null, "Customer Successfully added!");
 			}
 		});
+		
+		JButton customer_modify_button = new JButton("Modify");
+		customer_modify_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String fName = customer_fName_text.getText();
+				String lName = customer_lName_text.getText();
+				int age = Integer.parseInt(customer_age_text.getText());
+				String licenceNumber = customer_licNum_text.getText();
+				String ccNumber = customer_ccNum_text.getText();
+				String customerStatus = "Reservation"; 				//customer is going to be reservation status in the beginning
+				int customerID = Integer.parseInt(customer_id_text.getText());
+				Customer customer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
+				dao.updateCustomer(customerID, customer);
+				
+				JOptionPane.showMessageDialog(null, fName + lName + age);
+			}
+		});
 		customer_add_button.setBounds(23, 249, 73, 23);
 		frame.getContentPane().add(customer_add_button);
+		
+		customer_modify_button.setBounds(103, 249, 89, 23);
+		frame.getContentPane().add(customer_modify_button);
 		
 		customer_fName_text = new JTextField();
 		customer_fName_text.setBounds(106, 32, 86, 20);
@@ -156,11 +178,7 @@ public class gui {
 		
 		customer_id_label = new JLabel("ID");
 		customer_id_label.setBounds(23, 220, 46, 14);
-		frame.getContentPane().add(customer_id_label);
-		
-		customer_modify_button = new JButton("Modify");
-		customer_modify_button.setBounds(103, 249, 89, 23);
-		frame.getContentPane().add(customer_modify_button);
+		frame.getContentPane().add(customer_id_label);		
 		
 		JLabel customer_label = new JLabel("Customer");
 		customer_label.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -199,6 +217,14 @@ public class gui {
 		car_id_label.setBounds(223, 223, 46, 14);
 		frame.getContentPane().add(car_id_label);
 		
+		JLabel car_price_label = new JLabel("Price");
+		car_price_label.setBounds(223, 249, 46, 14);
+		frame.getContentPane().add(car_price_label);
+		
+		JLabel car_type_label = new JLabel("Type");
+		car_type_label.setBounds(223, 269, 46, 14);
+		frame.getContentPane().add(car_type_label);
+		
 		car_year_text = new JTextField();
 		car_year_text.setBounds(287, 32, 86, 20);
 		frame.getContentPane().add(car_year_text);
@@ -236,12 +262,39 @@ public class gui {
 		frame.getContentPane().add(car_id_text);
 		car_id_text.setColumns(10);
 		
+		car_price_text = new JTextField();
+		car_price_text.setBounds(287, 240, 86, 20);
+		frame.getContentPane().add(car_price_text);
+		car_year_text.setColumns(10);
+		
+		car_type_text = new JTextField();
+		car_type_text.setBounds(287, 270, 86, 20);
+		frame.getContentPane().add(car_type_text);
+		car_type_text.setColumns(10);
+		
 		JButton car_add_button = new JButton("Add");
-		car_add_button.setBounds(223, 249, 57, 23);
+		car_add_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Car c = new Car(0, car_make_text.getText(), car_model_text.getText(), Integer.parseInt(car_year_text.getText()), Integer.parseInt(car_mileage_text.getText()), car_condition_text.getText(), car_type_text.getText(), Integer.parseInt(car_price_text.getText()), car_status_text.getText());
+				car_id_text.setText(String.valueOf(dao.addCar(c)));
+				
+				JOptionPane.showMessageDialog(null, car_make_text.getText() + car_model_text.getText() + Integer.parseInt(car_year_text.getText()) + " added.");
+			}
+		});
+		car_add_button.setBounds(223, 300, 57, 23);
 		frame.getContentPane().add(car_add_button);
 		
 		JButton car_modify_button = new JButton("Modify");
-		car_modify_button.setBounds(297, 249, 76, 23);
+		car_modify_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Car c = new Car(0, car_make_text.getText(), car_model_text.getText(), Integer.parseInt(car_year_text.getText()), Integer.parseInt(car_mileage_text.getText()), car_condition_text.getText(), car_type_text.getText(), Integer.parseInt(car_price_text.getText()), car_status_text.getText());
+				dao.updateCar(Integer.parseInt(car_id_text.getText()), c);
+				
+				JOptionPane.showMessageDialog(null, "Car " + car_id_text.getText() + " modified.");
+
+			}
+		});
+		car_modify_button.setBounds(297, 300, 76, 23);
 		frame.getContentPane().add(car_modify_button);
 		
 	}
