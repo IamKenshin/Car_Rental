@@ -27,4 +27,18 @@ BEGIN
 	END IF;
 END $$
 
+
+DROP TRIGGER IF EXISTS UpdateRental;
+CREATE TRIGGER UpdateRental
+AFTER UPDATE ON Rental
+FOR EACH ROW
+BEGIN
+	IF NEW.car in (SELECT cID from car) and NEW.customer in (SELECT uID from customer) and NEW.RentalStatus = 'Returned'
+	THEN UPDATE `car` set
+	`CarStatus` = 'on hand', `Mileage` = `Mileage`+NEW.MilesIn WHERE car.cID = NEW.car;
+	UPDATE `customer` set
+	`CustomerStatus` = 'returned' WHERE customer.uID = NEW.customer;
+	END IF;
+END $$
+
 DELIMITER ;
