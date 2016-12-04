@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Dimension;
 
 public class gui {
 
@@ -24,19 +28,25 @@ public class gui {
 	private JLabel customer_ccNum_label;
 	private JLabel customer_id_label;
 	private JButton customer_modify_button;
+	private JTextField car_year_text;
+	private JTextField car_make_text;
+	private JTextField car_model_text;
+	private JTextField car_mileage_text;
+	private JTextField car_condition_text;
+	private JTextField car_status_text;
+	private JTextField car_id_text;
 	
-			//global dataaccess object
+			
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {	
-		DataAccess dao = new DataAccess();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					gui window = new gui();
-//					window.frame.setVisible(true);
+					gui window = new gui();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,6 +65,7 @@ public class gui {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		DataAccess dao = new DataAccess();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 727, 534);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,13 +123,12 @@ public class gui {
 		customer_status_text.setBounds(106, 186, 86, 20);
 		frame.getContentPane().add(customer_status_text);
 		customer_status_text.setColumns(10);
-		customer_status_text.setEnabled(false);
+		customer_status_text.setEditable(false);
 		
 		customer_id_text = new JTextField();
 		customer_id_text.setBounds(106, 217, 86, 20);
 		frame.getContentPane().add(customer_id_text);
 		customer_id_text.setColumns(10);
-		customer_id_text.setEnabled(false);
 		
 		JLabel customer_status_label = new JLabel("Status");
 		customer_status_label.setBounds(23, 189, 46, 14);
@@ -151,5 +161,88 @@ public class gui {
 		customer_modify_button = new JButton("Modify");
 		customer_modify_button.setBounds(103, 249, 89, 23);
 		frame.getContentPane().add(customer_modify_button);
+		
+		JLabel customer_label = new JLabel("Customer");
+		customer_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		customer_label.setBounds(63, 7, 113, 14);
+		frame.getContentPane().add(customer_label);
+		
+		JLabel lblCar = new JLabel("Car");
+		lblCar.setBounds(327, 8, 46, 14);
+		frame.getContentPane().add(lblCar);
+		
+		JLabel car_year_label = new JLabel("Year");
+		car_year_label.setBounds(223, 35, 46, 14);
+		frame.getContentPane().add(car_year_label);
+		
+		JLabel car_make_label = new JLabel("Make");
+		car_make_label.setBounds(223, 66, 46, 14);
+		frame.getContentPane().add(car_make_label);
+		
+		JLabel car_model_label = new JLabel("Model");
+		car_model_label.setBounds(223, 97, 46, 14);
+		frame.getContentPane().add(car_model_label);
+		
+		JLabel car_mileage_label = new JLabel("Mileage");
+		car_mileage_label.setBounds(223, 128, 46, 14);
+		frame.getContentPane().add(car_mileage_label);
+		
+		JLabel car_condition_label = new JLabel("Condition");
+		car_condition_label.setBounds(223, 162, 46, 14);
+		frame.getContentPane().add(car_condition_label);
+		
+		JLabel car_status_label = new JLabel("Status");
+		car_status_label.setBounds(223, 189, 46, 14);
+		frame.getContentPane().add(car_status_label);
+		
+		JLabel car_id_label = new JLabel("ID");
+		car_id_label.setBounds(223, 223, 46, 14);
+		frame.getContentPane().add(car_id_label);
+		
+		car_year_text = new JTextField();
+		car_year_text.setBounds(287, 32, 86, 20);
+		frame.getContentPane().add(car_year_text);
+		car_year_text.setColumns(10);
+		
+		car_make_text = new JTextField();
+		car_make_text.setBounds(287, 63, 86, 20);
+		frame.getContentPane().add(car_make_text);
+		car_make_text.setColumns(10);
+		
+		car_model_text = new JTextField();
+		car_model_text.setBounds(287, 94, 86, 20);
+		frame.getContentPane().add(car_model_text);
+		car_model_text.setColumns(10);
+		
+		car_mileage_text = new JTextField();
+		car_mileage_text.setBounds(287, 125, 86, 20);
+		frame.getContentPane().add(car_mileage_text);
+		car_mileage_text.setColumns(10);
+		
+		car_condition_text = new JTextField();
+		car_condition_text.setBounds(287, 156, 86, 20);
+		frame.getContentPane().add(car_condition_text);
+		car_condition_text.setColumns(10);
+		
+		car_status_text = new JTextField();
+		car_status_text.setText("On Hand");
+		car_status_text.setBounds(287, 186, 86, 20);
+		frame.getContentPane().add(car_status_text);
+		car_status_text.setColumns(10);
+		car_status_text.setEditable(false);
+		
+		car_id_text = new JTextField();
+		car_id_text.setBounds(287, 217, 86, 20);
+		frame.getContentPane().add(car_id_text);
+		car_id_text.setColumns(10);
+		
+		JButton car_add_button = new JButton("Add");
+		car_add_button.setBounds(223, 249, 57, 23);
+		frame.getContentPane().add(car_add_button);
+		
+		JButton car_modify_button = new JButton("Modify");
+		car_modify_button.setBounds(297, 249, 76, 23);
+		frame.getContentPane().add(car_modify_button);
+		
 	}
 }
