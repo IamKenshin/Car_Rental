@@ -315,6 +315,11 @@ public class gui {
 
 		//Rental Labels
 		
+		JLabel lblRen = new JLabel("Rental");
+		lblRen.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblRen.setBounds(680, 8, 100, 30);
+		frame.getContentPane().add(lblRen);
+		
 		ren_contract_label = new JLabel("Contract#");
 		ren_contract_label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ren_contract_label.setBounds(600, 35, 132, 14);
@@ -563,6 +568,39 @@ public class gui {
 		frame.getContentPane().add(car_type_text);
 		car_type_text.setColumns(10);
 		
+		JButton car_min_button = new JButton("MINYEAR");
+		car_min_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_min_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getOldestCarYear(), "Oldest Car Year", 1);
+			}
+		});
+		
+		car_min_button.setBounds(221, 350, 60, 23);
+		frame.getContentPane().add(car_min_button);
+		
+		JButton car_max_button = new JButton("MAXYEAR");
+		car_max_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_max_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getNewestCarYear(), "Newest Car Year", 1);
+			}
+		});
+		
+		car_max_button.setBounds(275, 350, 60, 23);
+		frame.getContentPane().add(car_max_button);
+		
+		JButton car_avg_button = new JButton("AVGYEAR");
+		car_avg_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_avg_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getAverageCarYear(), "Average Car Year", 1);
+			}
+		});
+		
+		car_avg_button.setBounds(330, 350, 60, 23);
+		frame.getContentPane().add(car_avg_button);
+		
 		JButton car_add_button = new JButton("Add");
 		car_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		car_add_button.addActionListener(new ActionListener() {
@@ -657,6 +695,11 @@ public class gui {
 		});
 		car_view_button.setBounds(275, 320, 60, 23);
 		frame.getContentPane().add(car_view_button);
+		
+		JLabel lblRes = new JLabel("Reservation");
+		lblRes.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblRes.setBounds(450, 8, 100, 30);
+		frame.getContentPane().add(lblRes);
 		
 		JLabel res_cust_label = new JLabel("Customer");
 		res_cust_label.setBounds(404, 35, 46, 14);
