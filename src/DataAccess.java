@@ -416,6 +416,36 @@ public class DataAccess {
 	}
 	
 	/**
+	 * Add information from reservation object to the database
+	 * @param reservation - object
+	 * @return - inserted reservationID 	//this can be used in gui's add reservation 
+	 */
+	public int addReservation(Reservation reservation){
+		int insertedReservationId = 0;
+		try{
+			String sql = "INSERT INTO reservation" +
+						 "(Customer, Agency, StartDate, EndDate, TotalDays) VALUES " +
+						 "(?, ?, ?, ?, ?)";
+			PreparedStatement prepStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			prepStmt.setInt(1, reservation.getCustomerId());
+			prepStmt.setInt(2, reservation.getAgencyId());
+			prepStmt.setDate(3, java.sql.Date.valueOf(reservation.getStartDate()));
+			prepStmt.setDate(4, java.sql.Date.valueOf(reservation.getEndDate()));
+			prepStmt.setInt(5, reservation.getTotalDays());
+			
+			int count = prepStmt.executeUpdate();
+			if (count != 0)
+				System.out.println("added new reservation");
+			ResultSet rs = prepStmt.getGeneratedKeys();
+			if (rs.next())
+				insertedReservationId = rs.getInt(1);
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return insertedReservationId;
+	}
+	
+	/**
 	 * Writes to the rental database with the information about rental, car, and dates
 	 * @param rental object that contains customerid, insurnace
 	 * @param car contains carid, mileage
@@ -802,13 +832,14 @@ public class DataAccess {
 			int totalDays = newReservation.getTotalDays();
 			try{
 				String sql = "UPDATE RESERVATION SET "
-						+ "customer=?, agency=?, startDate=?, endDate=?, TotalDays=?"; 
+						+ "customer=?, agency=?, startDate=?, endDate=?, TotalDays=? WHERE ReservationNumber=?"; 
 				PreparedStatement prepStmt = myConn.prepareStatement(sql);
 				prepStmt.setInt(1, customerId);
 				prepStmt.setInt(2, agencyId);
 				prepStmt.setDate(3, java.sql.Date.valueOf(startDate));
 				prepStmt.setDate(4, java.sql.Date.valueOf(endDate));
 				prepStmt.setInt(5, totalDays);
+				prepStmt.setInt(6, reservationId);
 				
 				int count = prepStmt.executeUpdate();
 				if (count != 0)
@@ -827,10 +858,12 @@ public class DataAccess {
 	public void cancelReservation(int reservationNumber) {
 		try {
 			String sql = "DELETE FROM reservation WHERE ReservationNumber =?";
-			PreparedStatement pS = myConn.prepareStatement(sql);
-			pS.setInt(1, reservationNumber);
+			PreparedStatement prepStmt = myConn.prepareStatement(sql);
+			prepStmt.setInt(1, reservationNumber);
 			
-			pS.executeUpdate();
+			int count = prepStmt.executeUpdate();
+			if (count != 0)
+				System.out.println("Reservation cancelled");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
