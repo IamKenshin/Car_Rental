@@ -263,7 +263,6 @@ public class DataAccess {
 		return list;
 	}
 	
-	
 	/**
 	 * This creates a list of rentals that have 'onrent' status. 
 	 * @return
@@ -308,6 +307,92 @@ public class DataAccess {
 	}
 	
 	
+	/**
+	 * This shows the oldest car year available. 
+	 * @return
+	 */
+	public List<Car> getOldestCarYear(){
+		List<Car> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT MIN(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				int minYear = myRs.getInt("MIN(year)");
+				
+				Car car = new Car(minYear);
+				list.add(car);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
+	
+	/**
+	 * This shows the newest car year available. 
+	 * @return
+	 */
+	public List<Car> getNewestCarYear(){
+		List<Car> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT Max(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				int maxYear = myRs.getInt("Max(year)");
+				
+				Car car = new Car(maxYear);
+				list.add(car);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
+	
+	/**
+	 * This shows the average car year available. 
+	 * @return
+	 */
+	public List<Car> getAverageCarYear(){
+		List<Car> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT AVG(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				int avgYear = myRs.getInt("AVG(year)");
+				
+				Car car = new Car(avgYear);
+				list.add(car);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
 	/**
 	 * add items from customer object into the database.
 	 * @param customer object containing all the information that are added. 
