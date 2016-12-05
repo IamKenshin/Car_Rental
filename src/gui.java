@@ -14,7 +14,6 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class gui {
 
@@ -804,8 +803,6 @@ public class gui {
 		frame.getContentPane().add(ren_label);
 
 		
-		
-		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{customer_fName_text, customer_lName_text, customer_age_text, customer_licNum_text, customer_ccNum_text, customer_status_text, customer_id_text, customer_add_button, customer_view_button, customer_status_label, customer_modify_button, car_year_text, car_make_text, car_model_text, car_mileage_text, car_condition_text, car_status_text, car_id_text, car_price_text, car_type_text, car_add_button, car_view_button, car_modify_button, res_cust_text, res_agency_text, res_start_text, res_end_text, res_total_text, res_id_text, res_add_button, res_view_button, res_cancel_button, res_modify_button, ren_contractID_text, ren_customerID_text, ren_carID_text, ren_agencyID_text, ren_insurance_text, ren_insurance_price_text, ren_start_text, ren_end_text, ren_status_text, ren_total_text, rental_add_button, rental_view_button, customer_fName_label, customer_lName_label, customer_age_label, customer_licNum_label, customer_ccNum_label, customer_id_label, customer_label, ren_contract_label, ren_customer_label, ren_car_label, ren_agency_label, ren_insurance_label, ren_insurance_price_label, ren_start_label, ren_end_label, ren_total_label, ren_status_label, car_label, car_year_label, car_make_label, car_model_label, car_mileage_label, car_condition_label, car_status_label, car_id_label, car_price_label, car_type_label, res_cust_label, res_agency_label, res_start_label, res_end_label, res_total_label, res_id_label}));
 		
 	}
 }
