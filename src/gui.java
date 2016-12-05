@@ -362,7 +362,7 @@ public class gui {
 		ren_startdate_text.setBounds(700, 218, 68, 20);
 		frame.getContentPane().add(ren_startdate_text);
 		ren_startdate_text.setColumns(10);
-		
+		ren_startdate_text.setText("");
 		JLabel ren_enddate_label= new JLabel("End Date");
 		ren_enddate_label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ren_enddate_label.setBounds(600, 252, 132, 14);
@@ -373,6 +373,7 @@ public class gui {
 		ren_enddate_text.setBounds(700, 249, 68, 20);
 		frame.getContentPane().add(ren_enddate_text);
 		ren_enddate_text.setColumns(10);
+		ren_enddate_text.setText("");
 		
 		JButton rental_add_button = new JButton("Add");
 		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
