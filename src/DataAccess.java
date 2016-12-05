@@ -267,7 +267,6 @@ public class DataAccess {
 		return list;
 	}
 	
-	
 	/**
 	 * This creates a list of rentals that have 'onrent' status. 
 	 * @return
@@ -316,6 +315,225 @@ public class DataAccess {
 	}
 	
 	
+	/**
+	 * This shows the oldest car year available. 
+	 * @return year of oldest car(s).
+	 */
+	public int getOldestCarYear(){
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT MIN(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				return myRs.getInt("MIN(year)");
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return -1;
+	}
+	
+	/**
+	 * This shows the newest car year available. 
+	 * @return year of newest car(s).
+	 */
+	public int getNewestCarYear(){
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT Max(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				return myRs.getInt("Max(year)");
+				
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return -1;
+	}
+	
+	/**
+	 * This shows the average car year available. 
+	 * @return
+	 */
+	public double getAverageCarYear(){
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT AVG(Year)"
+					+ " FROM car");
+			
+			while (myRs.next()){
+				return myRs.getDouble("AVG(year)");
+
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return -1;
+	} 
+	
+	/**
+	 * This groups by lastname, the customers and their number of rentals. 
+	 * @return
+	 */
+	public List<Rental> getNumberOfRental(){
+		List<Rental> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT customer.lname, COUNT(rental.ContractNumber)"
+					+ "AS NumberOfRentals FROM (rental INNER JOIN customer ON rental.customer=customer.uid) "
+					+ "GROUP BY lname"
+					+ " HAVING COUNT(rental.ContractNumber)");
+			
+			while (myRs.next()){
+				String lName = myRs.getString("lname");
+				int numberofrentals = myRs.getInt("COUNT(rental.ContractNumber)");
+				
+				Rental rental = new Rental(lName, numberofrentals);
+				list.add(rental);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
+	
+	/**
+	 * create a list of each rented car with its customer and the age of the oldest renter of that car
+	 * @return 
+	 */
+	public List<Customer> getAllRentedCarAndOldestRenter(){
+		List<Customer> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("select distinct car.make, car.model, car.year, lname, fname, age"
+					+ "from customer, car, rental "
+					+ "where car.cid=rental.car and customer.uid = rental.customer"
+					+ " and age >= all (select age from customer, rental where customer.uid = rental.customer and car.cid =rental.car and age is not null)");
+			
+			while (myRs.next()){
+				String make = myRs.getString("make");
+				String model = myRs.getString("model");
+				int year = myRs.getInt("year");
+				String fName = myRs.getString("fname");
+				String lName = myRs.getString("lname");
+				int age = myRs.getInt("age");
+				
+				Customer customer = new Customer(make, model, year, fName, lName, age);
+				list.add(customer);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
+	
+	/**
+	 * Creates a list of Cars that has never been rented
+	 * @return List<Car>
+	 */
+	public List<Car> getUnusedCars(){
+		List<Car> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT * FROM car"
+					+ " WHERE NOT EXISTS (SELECT * FROM rental WHERE rental.car = car.cid)");
+			
+			while (myRs.next()){
+				int carId = myRs.getInt("cID");
+				String make = myRs.getString("Make");
+				String model = myRs.getString("Model");
+				int year = myRs.getInt("Year");
+				int mileage = myRs.getInt("Mileage");
+				String condition = myRs.getString("vehicleCondition");
+				String type = myRs.getString("Type");
+				int price = myRs.getInt("price");
+				String status = myRs.getString("CarStatus");
+				
+				Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
+				list.add(car);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
+
+	
+	/**
+	 * Creates a list of Cused cars
+	 * @return List<Car>
+	 */
+	public List<Car> getUsedCars(){
+		List<Car> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet myRs = null;
+		
+		try{
+			stmt = myConn.createStatement();
+			myRs = stmt.executeQuery("SELECT * FROM car"
+					+ " WHERE EXISTS (SELECT * FROM rental WHERE rental.car=car.cid);");
+			
+			while (myRs.next()){
+				int carId = myRs.getInt("cID");
+				String make = myRs.getString("Make");
+				String model = myRs.getString("Model");
+				int year = myRs.getInt("Year");
+				int mileage = myRs.getInt("Mileage");
+				String condition = myRs.getString("vehicleCondition");
+				String type = myRs.getString("Type");
+				int price = myRs.getInt("price");
+				String status = myRs.getString("CarStatus");
+				
+				Car car = new Car(carId, make, model, year, mileage, condition, type, price, status);
+				list.add(car);
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally {
+			close(stmt, myRs);
+		}
+		return list;
+	}
 	/**
 	 * add items from customer object into the database.
 	 * @param customer object containing all the information that are added. 

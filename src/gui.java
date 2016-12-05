@@ -5,7 +5,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -14,6 +16,12 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
+<<<<<<< HEAD
+=======
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+>>>>>>> e42beae91113a0b33bb4d3f7060145d30142f44d
+
 
 public class gui {
 
@@ -54,8 +62,10 @@ public class gui {
 	private JTextField ren_agencyID_text;
 	private JTextField ren_insurance_text;
 	private JTextField ren_insurance_price_text;
+
 	private JTextField ren_start_text;
 	private JTextField ren_end_text;
+
 	private JTextField ren_status_text;
 	private JTextField ren_total_text;
 
@@ -65,8 +75,10 @@ public class gui {
 	private JLabel ren_agency_label;
 	private JLabel ren_insurance_label;
 	private JLabel ren_insurance_price_label;
+
 	private JLabel ren_start_label;
 	private JLabel ren_end_label;
+
 	private JLabel ren_total_label;
 	private JLabel ren_status_label;
 	
@@ -182,9 +194,11 @@ public class gui {
 		customer_label.setBounds(63, 7, 85, 14);
 		frame.getContentPane().add(customer_label);
 		
+
 		JButton customer_add_button = new JButton("Add");
 		customer_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		customer_add_button.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent arg0) {
 				String fName = customer_fName_text.getText();
 				String lName = customer_lName_text.getText();
@@ -196,6 +210,7 @@ public class gui {
 				int customerId = dao.addCustomer(customer);
 				customer_id_text.setText(String.valueOf(customerId));
 				
+
 				JOptionPane.showMessageDialog(null, fName + lName + age);
 				
 				customer_fName_text.setText("");
@@ -360,6 +375,39 @@ public class gui {
 		car_type_text.setBounds(285, 281, 68, 20);
 		frame.getContentPane().add(car_type_text);
 		car_type_text.setColumns(10);
+		
+		JButton car_min_button = new JButton("MINYEAR");
+		car_min_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_min_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getOldestCarYear(), "Oldest Car Year", 1);
+			}
+		});
+		
+		car_min_button.setBounds(221, 350, 60, 23);
+		frame.getContentPane().add(car_min_button);
+		
+		JButton car_max_button = new JButton("MAXYEAR");
+		car_max_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_max_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getNewestCarYear(), "Newest Car Year", 1);
+			}
+		});
+		
+		car_max_button.setBounds(275, 350, 60, 23);
+		frame.getContentPane().add(car_max_button);
+		
+		JButton car_avg_button = new JButton("AVGYEAR");
+		car_avg_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_avg_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getAverageCarYear(), "Average Car Year", 1);
+			}
+		});
+		
+		car_avg_button.setBounds(330, 350, 60, 23);
+		frame.getContentPane().add(car_avg_button);
 		
 		JButton car_add_button = new JButton("Add");
 		car_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));

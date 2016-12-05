@@ -74,6 +74,7 @@ public class Rental {
 		this.endDate = endDate;
 	}
 	
+
 	public Rental (Reservation reservation, Car car, Dates dates){
 		//working on creating new rental based on reservation, car, dates and other fields
 	
@@ -88,6 +89,7 @@ public class Rental {
 		this.endDate = dates.getEndDate();
 		this.totalDays = dates.getTotalDays();
 		this.totalPrice = totalPrice;
+
 	}
 	
 	public String toString(){

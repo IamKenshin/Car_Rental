@@ -17,6 +17,7 @@ public class Car {
 		this.carStatus = carStatus;
 		
 	}
+
 	public int getCarId() {
 		return carId;
 	}

@@ -1,4 +1,4 @@
-/* groups by last name customers and all the rentals theyve had*/
+/* groups by last name the customers and all the rentals theyve had*/
 SELECT customer.lname, COUNT(rental.ContractNumber) AS NumberOfRentals FROM (rental
 INNER JOIN customer
 ON rental.customer=customer.uid)
@@ -22,17 +22,19 @@ SELECT COUNT(*)
  SELECT AVG(Year)
   FROM car;
 
-/* shows the prices of each car*/
+/* shows the prices of each car
  SELECT make, model, year, price 
  FROM car;
-
-/* selects all customers and their rental*/
+*/
+  
+/* selects all customers and their rental
  SELECT customer.lname, customer.fname, rental.ContractNumber
 FROM customer 
 FUll OUTER JOIN rental
 ON customer.uid=rental.Customer
 ORDER BY customer.lname;
-
+*/
+  
 /* pairs each rented car with the customer and the age of the oldest renter of that car*/
 select distinct car.make, car.model, car.year, lname, fname, age
 from customer, car, rental
