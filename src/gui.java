@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -116,7 +117,7 @@ public class gui {
 				Customer newCustomer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
 				dao.updateCustomer(customerId, newCustomer);
 				
-				JOptionPane.showMessageDialog(null, fName + lName + age);
+				JOptionPane.showMessageDialog(null, "Updated Customer");
 			}
 		});
 		customer_add_button.setBounds(10, 249, 60, 23);
@@ -318,15 +319,20 @@ public class gui {
 			public void actionPerformed(ActionEvent arg0) {			
 				int customerID = Integer.parseInt(customer_id_text.getText());
 				Customer customer = dao.searchCustomer(customerID);
+				if (customer != null){
+					customer_fName_text.setText(customer.getFname());
+					customer_lName_text.setText(customer.getLname());
+					customer_age_text.setText(String.valueOf(customer.getAge()));
+					customer_licNum_text.setText(customer.getLicenceNumber());
+					customer_ccNum_text.setText(customer.getCcNumber());
+					
+					customer_id_text.setEditable(false);
+					customer_modify_button.setEnabled(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Customer not found!");
+				}
 
-				customer_fName_text.setText(customer.getFname());
-				customer_lName_text.setText(customer.getLname());
-				customer_age_text.setText(String.valueOf(customer.getAge()));
-				customer_licNum_text.setText(customer.getLicenceNumber());
-				customer_ccNum_text.setText(customer.getCcNumber());
-				
-				customer_id_text.setEditable(false);
-				customer_modify_button.setEnabled(true);
+
 			}
 		});
 		customer_view_button.setBounds(72, 249, 70, 23);
@@ -338,17 +344,21 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {			
 				int carId = Integer.parseInt(car_id_text.getText());
 				Car car = dao.searchCar(carId);
-				
-				car_year_text.setText(String.valueOf(car.getYear()));
-				car_make_text.setText(car.getMake());
-				car_model_text.setText(car.getModel());
-				car_mileage_text.setText(String.valueOf(car.getMileage()));
-				car_condition_text.setText(car.getCondition());
-				car_price_text.setText(String.valueOf(car.getPrice()));
-				car_type_text.setText(car.getType());
-				
-				car_id_text.setEditable(false);
-				car_modify_button.setEnabled(true);
+				if (car != null){
+					car_year_text.setText(String.valueOf(car.getYear()));
+					car_make_text.setText(car.getMake());
+					car_model_text.setText(car.getModel());
+					car_mileage_text.setText(String.valueOf(car.getMileage()));
+					car_condition_text.setText(car.getCondition());
+					car_price_text.setText(String.valueOf(car.getPrice()));
+					car_type_text.setText(car.getType());
+					
+					car_id_text.setEditable(false);
+					car_modify_button.setEnabled(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Car not found!");
+				}
+
 			}
 		});
 		car_view_button.setBounds(275, 320, 60, 23);
@@ -402,6 +412,7 @@ public class gui {
 		res_total_text.setBounds(470, 156, 68, 20);
 		frame.getContentPane().add(res_total_text);
 		res_total_text.setColumns(10);
+		res_total_text.setEditable(false);
 		
 		res_id_text = new JTextField();
 		res_id_text.setBounds(470, 186, 68, 20);
@@ -409,6 +420,26 @@ public class gui {
 		res_id_text.setColumns(10);
 		
 		JButton res_add_button = new JButton("Add");
+		res_add_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int customerId, agencyId, totalDays, reservationId;
+				LocalDate startDate, endDate;
+				
+				customerId = Integer.parseInt(res_cust_text.getText());
+				agencyId = Integer.parseInt(res_agency_text.getText());
+				startDate = LocalDate.parse(res_start_text.getText());
+				endDate = LocalDate.parse(res_end_text.getText());
+				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
+				Dates dates = new Dates(startDate, endDate, totalDays);
+				
+				Reservation res = new Reservation(0, customerId, agencyId, dates);
+				
+				reservationId = dao.addReservation(res);
+				res_total_text.setText(String.valueOf(totalDays));
+				res_id_text.setText(String.valueOf(reservationId));
+				
+			}
+		});
 		
 		res_add_button.setBounds(404, 223, 65, 23);
 		frame.getContentPane().add(res_add_button);
@@ -418,20 +449,75 @@ public class gui {
 		res_cancel_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		res_cancel_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int reservationNumber = Integer.valueOf(res_id_text.getText());
+				dao.cancelReservation(reservationNumber);
+				JOptionPane.showMessageDialog(null, "Reservation Cancelled!");
+				
 			}
 		});
 		res_cancel_button.setBounds(404, 249, 65, 23);
 		frame.getContentPane().add(res_cancel_button);
+		res_cancel_button.setEnabled(false);
+		
+		JButton res_modify_button = new JButton("Mod");
+		res_modify_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int customerId, agencyId, totalDays;
+				LocalDate startDate, endDate;
+				int reservationNumber = Integer.parseInt(res_id_text.getText());
+				
+				customerId = Integer.parseInt(res_cust_text.getText());
+				agencyId = Integer.parseInt(res_agency_text.getText());
+				startDate = LocalDate.parse(res_start_text.getText());
+				endDate = LocalDate.parse(res_end_text.getText());
+				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
+				Dates dates = new Dates(startDate, endDate, totalDays);
+				
+				Reservation newRes = new Reservation(reservationNumber, customerId, agencyId, dates);
+				dao.updateReservation(reservationNumber, newRes);
+				
+				JOptionPane.showMessageDialog(null, "Updated Reservation");
+			}
+		});
+		res_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		res_modify_button.setBounds(479, 249, 60, 23);
+		frame.getContentPane().add(res_modify_button);
+		res_modify_button.setEnabled(false);
 		
 		JButton res_view_button = new JButton("View");
+		res_view_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int reservationId = Integer.parseInt(res_id_text.getText());
+				Reservation res = dao.searchReservation(reservationId);
+				if (res != null){
+					res_cust_text.setText(String.valueOf(res.getCustomerId()));
+					res_agency_text.setText(String.valueOf(res.getAgencyId()));
+					res_start_text.setText(res.getStartDate().toString());
+					res_end_text.setText(res.getEndDate().toString());
+					res_total_text.setText(String.valueOf(res.getTotalDays()));
+					res_id_text.setText(String.valueOf(res.getReservationNumber()));
+					
+					Customer customer = dao.searchCustomer(res.getCustomerId());
+					
+					customer_fName_text.setText(customer.getFname());
+					customer_lName_text.setText(customer.getLname());
+					customer_age_text.setText(String.valueOf(customer.getAge()));
+					customer_licNum_text.setText(customer.getLicenceNumber());
+					customer_ccNum_text.setText(customer.getCcNumber());
+					customer_id_text.setText(String.valueOf(customer.getCustomerId()));
+					
+					res_id_text.setEditable(false);
+					customer_id_text.setEditable(false);
+					res_modify_button.setEnabled(true);
+					res_cancel_button.setEnabled(true);
+				} else
+					JOptionPane.showMessageDialog(null, "Reservation not found!");
+				
+			}
+		});
 		res_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		res_view_button.setBounds(480, 223, 60, 23);
 		frame.getContentPane().add(res_view_button);
-		
-		JButton res_mod_button = new JButton("Mod");
-		res_mod_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		res_mod_button.setBounds(479, 249, 60, 23);
-		frame.getContentPane().add(res_mod_button);
 		
 	}
 }
