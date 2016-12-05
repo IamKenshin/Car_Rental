@@ -29,7 +29,8 @@ public class gui {
 	private JLabel customer_licNum_label;
 	private JLabel customer_ccNum_label;
 	private JLabel customer_id_label;
-	//private JButton customer_modify_button;
+	private JButton customer_modify_button;
+	private JButton car_modify_button;
 	private JTextField car_year_text;
 	private JTextField car_make_text;
 	private JTextField car_model_text;
@@ -46,6 +47,36 @@ public class gui {
 	private JTextField res_end_text;
 	private JTextField res_total_text;
 	private JTextField res_id_text;
+	
+	private JTextField ren_contractID_text;
+	private JTextField ren_customerID_text;
+	private JTextField ren_carID_text;
+	private JTextField ren_agencyID_text;
+	private JTextField ren_insurance_text;
+	private JTextField ren_insurance_price_text;
+	private JTextField ren_startday_text;
+	private JTextField ren_startmonth_text;
+	private JTextField ren_startyear_text;
+	private JTextField ren_endday_text;
+	private JTextField ren_endmonth_text;
+	private JTextField ren_endyear_text;
+	private JTextField ren_totalprice_text;
+	private JTextField ren_status_text;
+
+	private JLabel ren_contract_label;
+	private JLabel ren_customer_label;
+	private JLabel ren_car_label;
+	private JLabel ren_agency_label;
+	private JLabel ren_insurance_label;
+	private JLabel ren_insurance_price_label;
+	private JLabel ren_sday_label;
+	private JLabel ren_smonth_label;
+	private JLabel ren_syear_label;
+	private JLabel ren_eday_label;
+	private JLabel ren_emonth_label;
+	private JLabel ren_eyear_label;
+	private JLabel ren_total_label;
+	private JLabel ren_status_label;
 	
 			
 
@@ -97,6 +128,16 @@ public class gui {
 				customer_id_text.setText(String.valueOf(customerId));
 				
 				JOptionPane.showMessageDialog(null, fName + lName + age);
+				
+				customer_fName_text.setText("");
+				customer_lName_text.setText("");
+				customer_age_text.setText("");
+				customer_licNum_text.setText("");
+				customer_ccNum_text.setText("");
+				customer_id_text.setText("");
+				
+				customer_id_text.setEditable(true);
+				customer_modify_button.setEnabled(false);
 			}
 		});
 		
@@ -116,6 +157,9 @@ public class gui {
 			
 				Customer newCustomer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
 				dao.updateCustomer(customerId, newCustomer);
+				
+				customer_id_text.setEditable(true);
+				customer_modify_button.setEnabled(false);
 				
 				JOptionPane.showMessageDialog(null, "Updated Customer");
 			}
@@ -196,6 +240,207 @@ public class gui {
 		customer_label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		customer_label.setBounds(63, 7, 85, 14);
 		frame.getContentPane().add(customer_label);
+		
+		//Rental Textfields
+		
+		ren_contractID_text = new JTextField();
+		ren_contractID_text.setBounds(700, 32, 68, 20);
+		frame.getContentPane().add(ren_contractID_text);
+		ren_contractID_text.setColumns(10);
+		
+		ren_customerID_text= new JTextField();
+		ren_customerID_text.setBounds(700, 63, 68, 20);
+		frame.getContentPane().add(		ren_customerID_text);
+		ren_customerID_text.setColumns(10);
+		
+		ren_carID_text= new JTextField();
+		ren_carID_text.setBounds(700, 94, 68, 20);
+		frame.getContentPane().add(ren_carID_text);
+		ren_carID_text.setColumns(10);
+		
+		ren_agencyID_text= new JTextField();
+		ren_agencyID_text.setBounds(700, 125, 68, 20);
+		frame.getContentPane().add(ren_agencyID_text);
+		ren_agencyID_text.setColumns(10);
+		
+		ren_insurance_text= new JTextField();
+		ren_insurance_text.setBounds(700, 156, 68, 20);
+		frame.getContentPane().add(ren_insurance_text);
+		ren_insurance_text.setColumns(10);
+		
+		ren_insurance_price_text= new JTextField();
+		ren_insurance_price_text.setBounds(700, 187, 68, 20);
+		frame.getContentPane().add(ren_insurance_price_text);
+		ren_insurance_price_text.setColumns(10);
+		
+		ren_startday_text= new JTextField();
+		ren_startday_text.setBounds(700, 218, 68, 20);
+		frame.getContentPane().add(ren_startday_text);
+		ren_startday_text.setColumns(10);
+		
+		ren_startmonth_text= new JTextField();
+		ren_startmonth_text.setBounds(700, 249, 68, 20);
+		frame.getContentPane().add(ren_startmonth_text);
+		ren_startmonth_text.setColumns(10);
+		
+		ren_startyear_text= new JTextField();
+		ren_startyear_text.setBounds(700, 280, 68, 20);
+		frame.getContentPane().add(ren_startyear_text);
+		ren_startyear_text.setColumns(10);
+		
+		ren_endday_text= new JTextField();
+		ren_endday_text.setBounds(700, 311, 68, 20);
+		frame.getContentPane().add(ren_endday_text);
+		ren_endday_text.setColumns(10);
+		
+		ren_endmonth_text= new JTextField();
+		ren_endmonth_text.setBounds(700, 342, 68, 20);
+		frame.getContentPane().add(ren_endmonth_text);
+		ren_endmonth_text.setColumns(10);
+		
+		ren_endyear_text= new JTextField();
+		ren_endyear_text.setBounds(700, 373, 68, 20);
+		frame.getContentPane().add(ren_endyear_text);
+		ren_endyear_text.setColumns(10);
+		
+		ren_totalprice_text= new JTextField();
+		ren_totalprice_text.setBounds(700, 404, 68, 20);
+		frame.getContentPane().add(ren_totalprice_text);
+		ren_totalprice_text.setColumns(10);
+		
+		ren_status_text= new JTextField();
+		ren_status_text.setBounds(700, 435, 68, 20);
+		frame.getContentPane().add(ren_status_text);
+		ren_status_text.setColumns(10);
+
+		//Rental Labels
+		
+		ren_contract_label = new JLabel("Contract#");
+		ren_contract_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_contract_label.setBounds(600, 35, 132, 14);
+		frame.getContentPane().add(ren_contract_label);
+		
+		ren_customer_label= new JLabel("Customer#");
+		ren_customer_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_customer_label.setBounds(600, 66, 132, 14);
+		frame.getContentPane().add(ren_customer_label);
+		
+		ren_car_label= new JLabel("Car#");
+		ren_car_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_car_label.setBounds(600, 97, 132, 14);
+		frame.getContentPane().add(ren_car_label);
+		
+		ren_agency_label= new JLabel("Agency#");
+		ren_agency_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_agency_label.setBounds(600, 128, 132, 14);
+		frame.getContentPane().add(ren_agency_label);
+		
+		ren_insurance_label= new JLabel("Insurance");
+		ren_insurance_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_insurance_label.setBounds(600, 159, 132, 14);
+		frame.getContentPane().add(ren_insurance_label);
+		
+		ren_insurance_price_label= new JLabel("Insurance $");
+		ren_insurance_price_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_insurance_price_label.setBounds(600, 190, 132, 14);
+		frame.getContentPane().add(ren_insurance_price_label);
+		
+		ren_sday_label= new JLabel("start day");
+		ren_sday_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_sday_label.setBounds(600, 221, 132, 14);
+		frame.getContentPane().add(ren_sday_label);
+		
+		ren_smonth_label= new JLabel("start month");
+		ren_smonth_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_smonth_label.setBounds(600, 252, 132, 14);
+		frame.getContentPane().add(ren_smonth_label);
+		
+		ren_syear_label= new JLabel("start year");
+		ren_syear_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_syear_label.setBounds(600, 283, 132, 14);
+		frame.getContentPane().add(ren_syear_label);
+		
+		ren_eday_label= new JLabel("end day");
+		ren_eday_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_eday_label.setBounds(600, 314, 132, 14);
+		frame.getContentPane().add(ren_eday_label);
+		
+		ren_emonth_label= new JLabel("end month");
+		ren_emonth_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_emonth_label.setBounds(600, 345, 132, 14);
+		frame.getContentPane().add(ren_emonth_label);
+		
+		ren_eyear_label= new JLabel("end year");
+		ren_eyear_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_eyear_label.setBounds(600, 376, 132, 14);
+		frame.getContentPane().add(ren_eyear_label);
+		
+		ren_total_label= new JLabel("Total Price");
+		ren_total_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_total_label.setBounds(600, 407, 132, 14);
+		frame.getContentPane().add(ren_total_label);
+		
+		ren_status_label= new JLabel("Rental Status");
+		ren_status_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_status_label.setBounds(600, 438, 132, 14);
+		frame.getContentPane().add(ren_status_label);
+		
+		JButton rental_add_button = new JButton("Add");
+		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_add_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int customer = Integer.parseInt(ren_customerID_text.getText());
+				int car = Integer.parseInt(ren_carID_text.getText());
+				int agency = Integer.parseInt(ren_agencyID_text.getText());
+				String insurance = ren_insurance_text.getText();
+				int insPrice = Integer.parseInt(ren_insurance_price_text.getText());
+				int sday = Integer.parseInt(ren_startday_text.getText());
+				int smonth = Integer.parseInt(ren_startmonth_text.getText());
+				int syear = Integer.parseInt(ren_startyear_text.getText());
+				int eday = Integer.parseInt(ren_endday_text.getText());
+				int emonth = Integer.parseInt(ren_endmonth_text.getText());
+				int eyear = Integer.parseInt(ren_endyear_text.getText());
+				String status = ren_status_text.getText();
+				
+				Car c = dao.searchCar(car);
+				LocalDate start = LocalDate.of(syear, smonth, sday);
+				LocalDate end = LocalDate.of(eyear, emonth, eday);
+				int totalDays = (int) (end.toEpochDay() - start.toEpochDay());
+				
+				Dates d = new Dates(start, end, totalDays);
+				
+				int totalPrice = (c.getPrice() * totalDays);
+				int underageFee = 30;
+				DataAccess dao = new DataAccess();
+				
+				if (dao.under25(customer))
+				{
+					totalPrice = totalPrice + underageFee;
+				}
+				Rental rental = new Rental(customer, c, agency, insurance, insPrice, d, totalPrice, status);
+				
+				if (insurance.equals("Yes"))
+				{
+					totalPrice = totalPrice + insPrice;
+				}
+				rental.setTotalPrice(totalPrice);
+				
+				int rentalID = dao.rentalCheckOut(rental, c, d);
+				ren_contractID_text.setText(String.valueOf(rentalID));
+				
+				ren_status_text.setText(dao.searchRental(rentalID).getStatus());
+				ren_totalprice_text.setText(String.valueOf(totalPrice));
+				JOptionPane.showMessageDialog(null, "Rental Contract Number: " + rentalID + ". Total Price is " + totalPrice);
+				
+				ren_contractID_text.setEditable(true);
+				//ren_modify_button.setEnabled(false); //not implemented yet
+			}
+		});
+		
+		rental_add_button.setBounds(600, 480, 55, 23);
+		frame.getContentPane().add(rental_add_button);
+		
 		
 		JLabel lblCar = new JLabel("Car");
 		lblCar.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -293,12 +538,25 @@ public class gui {
 				car_id_text.setText(String.valueOf(dao.addCar(c)));
 				
 				JOptionPane.showMessageDialog(null, car_make_text.getText() + car_model_text.getText() + Integer.parseInt(car_year_text.getText()) + " added.");
+				
+				car_year_text.setText("");
+				car_make_text.setText("");
+				car_model_text.setText("");
+				car_mileage_text.setText("");
+				car_condition_text.setText("");
+				car_id_text.setText("");
+				car_price_text.setText("");
+				car_type_text.setText("");
+				
+				car_id_text.setEditable(true);
+				car_modify_button.setEnabled(false);
+				
 			}
 		});
 		car_add_button.setBounds(221, 320, 55, 23);
 		frame.getContentPane().add(car_add_button);
 		
-		JButton car_modify_button = new JButton("Mod");
+		car_modify_button = new JButton("Mod");
 		car_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		car_modify_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -306,6 +564,8 @@ public class gui {
 				dao.updateCar(Integer.parseInt(car_id_text.getText()), c);
 				
 				JOptionPane.showMessageDialog(null, "Car " + car_id_text.getText() + " modified.");
+				car_id_text.setEditable(true);
+				car_modify_button.setEnabled(false);
 
 			}
 		});
@@ -325,7 +585,7 @@ public class gui {
 					customer_age_text.setText(String.valueOf(customer.getAge()));
 					customer_licNum_text.setText(customer.getLicenceNumber());
 					customer_ccNum_text.setText(customer.getCcNumber());
-					
+					customer_status_text.setText(customer.getStatus());
 					customer_id_text.setEditable(false);
 					customer_modify_button.setEnabled(true);
 				} else {
@@ -349,6 +609,7 @@ public class gui {
 					car_make_text.setText(car.getMake());
 					car_model_text.setText(car.getModel());
 					car_mileage_text.setText(String.valueOf(car.getMileage()));
+					car_status_text.setText(car.getStatus());
 					car_condition_text.setText(car.getCondition());
 					car_price_text.setText(String.valueOf(car.getPrice()));
 					car_type_text.setText(car.getType());
