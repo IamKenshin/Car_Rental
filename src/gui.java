@@ -5,7 +5,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class gui {
 
@@ -54,12 +57,6 @@ public class gui {
 	private JTextField ren_agencyID_text;
 	private JTextField ren_insurance_text;
 	private JTextField ren_insurance_price_text;
-	private JTextField ren_startday_text;
-	private JTextField ren_startmonth_text;
-	private JTextField ren_startyear_text;
-	private JTextField ren_endday_text;
-	private JTextField ren_endmonth_text;
-	private JTextField ren_endyear_text;
 	private JTextField ren_totalprice_text;
 	private JTextField ren_status_text;
 
@@ -69,12 +66,6 @@ public class gui {
 	private JLabel ren_agency_label;
 	private JLabel ren_insurance_label;
 	private JLabel ren_insurance_price_label;
-	private JLabel ren_sday_label;
-	private JLabel ren_smonth_label;
-	private JLabel ren_syear_label;
-	private JLabel ren_eday_label;
-	private JLabel ren_emonth_label;
-	private JLabel ren_eyear_label;
 	private JLabel ren_total_label;
 	private JLabel ren_status_label;
 	
@@ -273,7 +264,7 @@ public class gui {
 		frame.getContentPane().add(ren_insurance_price_text);
 		ren_insurance_price_text.setColumns(10);
 		
-		ren_startday_text= new JTextField();
+		/*ren_startday_text= new JTextField();
 		ren_startday_text.setBounds(700, 218, 68, 20);
 		frame.getContentPane().add(ren_startday_text);
 		ren_startday_text.setColumns(10);
@@ -288,7 +279,7 @@ public class gui {
 		frame.getContentPane().add(ren_startyear_text);
 		ren_startyear_text.setColumns(10);
 		
-		ren_endday_text= new JTextField();
+		/*ren_endday_text= new JTextField();
 		ren_endday_text.setBounds(700, 311, 68, 20);
 		frame.getContentPane().add(ren_endday_text);
 		ren_endday_text.setColumns(10);
@@ -301,15 +292,15 @@ public class gui {
 		ren_endyear_text= new JTextField();
 		ren_endyear_text.setBounds(700, 373, 68, 20);
 		frame.getContentPane().add(ren_endyear_text);
-		ren_endyear_text.setColumns(10);
+		ren_endyear_text.setColumns(10);*/
 		
 		ren_totalprice_text= new JTextField();
-		ren_totalprice_text.setBounds(700, 404, 68, 20);
+		ren_totalprice_text.setBounds(700, 280, 68, 20);
 		frame.getContentPane().add(ren_totalprice_text);
 		ren_totalprice_text.setColumns(10);
 		
 		ren_status_text= new JTextField();
-		ren_status_text.setBounds(700, 435, 68, 20);
+		ren_status_text.setBounds(700, 311, 68, 20);
 		frame.getContentPane().add(ren_status_text);
 		ren_status_text.setColumns(10);
 
@@ -349,46 +340,39 @@ public class gui {
 		ren_insurance_price_label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ren_insurance_price_label.setBounds(600, 190, 132, 14);
 		frame.getContentPane().add(ren_insurance_price_label);
-		
-		ren_sday_label= new JLabel("start day");
-		ren_sday_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_sday_label.setBounds(600, 221, 132, 14);
-		frame.getContentPane().add(ren_sday_label);
-		
-		ren_smonth_label= new JLabel("start month");
-		ren_smonth_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_smonth_label.setBounds(600, 252, 132, 14);
-		frame.getContentPane().add(ren_smonth_label);
-		
-		ren_syear_label= new JLabel("start year");
-		ren_syear_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_syear_label.setBounds(600, 283, 132, 14);
-		frame.getContentPane().add(ren_syear_label);
-		
-		ren_eday_label= new JLabel("end day");
-		ren_eday_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_eday_label.setBounds(600, 314, 132, 14);
-		frame.getContentPane().add(ren_eday_label);
-		
-		ren_emonth_label= new JLabel("end month");
-		ren_emonth_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_emonth_label.setBounds(600, 345, 132, 14);
-		frame.getContentPane().add(ren_emonth_label);
-		
-		ren_eyear_label= new JLabel("end year");
-		ren_eyear_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_eyear_label.setBounds(600, 376, 132, 14);
-		frame.getContentPane().add(ren_eyear_label);
-		
+
 		ren_total_label= new JLabel("Total Price");
 		ren_total_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_total_label.setBounds(600, 407, 132, 14);
+		ren_total_label.setBounds(600, 283, 132, 14);
 		frame.getContentPane().add(ren_total_label);
 		
 		ren_status_label= new JLabel("Rental Status");
 		ren_status_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_status_label.setBounds(600, 438, 132, 14);
+		ren_status_label.setBounds(600, 314, 132, 14);
 		frame.getContentPane().add(ren_status_label);
+		
+		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		
+		JLabel ren_startdate_label= new JLabel("Start Date");
+		ren_startdate_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_startdate_label.setBounds(600, 221, 132, 14);
+		frame.getContentPane().add(ren_startdate_label);
+		
+		JFormattedTextField ren_startdate_text = new JFormattedTextField(sdf);
+		ren_startdate_text.setBounds(700, 218, 68, 20);
+		frame.getContentPane().add(ren_startdate_text);
+		ren_startdate_text.setColumns(10);
+		
+		JLabel ren_enddate_label= new JLabel("End Date");
+		ren_enddate_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_enddate_label.setBounds(600, 252, 132, 14);
+		frame.getContentPane().add(ren_enddate_label);
+		
+		
+		JFormattedTextField ren_enddate_text = new JFormattedTextField(sdf);
+		ren_enddate_text.setBounds(700, 249, 68, 20);
+		frame.getContentPane().add(ren_enddate_text);
+		ren_enddate_text.setColumns(10);
 		
 		JButton rental_add_button = new JButton("Add");
 		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -400,17 +384,12 @@ public class gui {
 				int agency = Integer.parseInt(ren_agencyID_text.getText());
 				String insurance = ren_insurance_text.getText();
 				int insPrice = Integer.parseInt(ren_insurance_price_text.getText());
-				int sday = Integer.parseInt(ren_startday_text.getText());
-				int smonth = Integer.parseInt(ren_startmonth_text.getText());
-				int syear = Integer.parseInt(ren_startyear_text.getText());
-				int eday = Integer.parseInt(ren_endday_text.getText());
-				int emonth = Integer.parseInt(ren_endmonth_text.getText());
-				int eyear = Integer.parseInt(ren_endyear_text.getText());
+				LocalDate start = LocalDate.parse(ren_startdate_text.getText(), sdf);
+				LocalDate end = LocalDate.parse(ren_enddate_text.getText(), sdf);
 				String status = ren_status_text.getText();
 				
 				Car c = dao.searchCar(car);
-				LocalDate start = LocalDate.of(syear, smonth, sday);
-				LocalDate end = LocalDate.of(eyear, emonth, eday);
+
 				int totalDays = (int) (end.toEpochDay() - start.toEpochDay());
 				
 				Dates d = new Dates(start, end, totalDays);
@@ -459,12 +438,8 @@ public class gui {
 					ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
 					ren_insurance_text.setText(r.getInsurance());
 					ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
-					ren_startday_text.setText(String.valueOf(r.getStartDate().getDayOfMonth()));
-					ren_startmonth_text.setText(String.valueOf(r.getStartDate().getMonthValue()));
-					ren_startyear_text.setText(String.valueOf(r.getStartDate().getYear()));
-					ren_endday_text.setText(String.valueOf(r.getEndDate().getDayOfMonth()));
-					ren_endmonth_text.setText(String.valueOf(r.getEndDate().getMonthValue()));
-					ren_endyear_text.setText(String.valueOf(r.getEndDate().getYear()));
+					ren_startdate_text.setText(String.valueOf(r.getStartDate().format(sdf)));
+					ren_enddate_text.setText(String.valueOf(r.getEndDate().format(sdf)));
 					ren_status_text.setText(r.getStatus());
 					ren_totalprice_text.setText(String.valueOf(r.getTotalPrice()));
 				}
