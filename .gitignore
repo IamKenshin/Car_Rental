@@ -48,3 +48,8 @@ Temporary Items
 .classpath
 .settings/org.eclipse.jdt.core.prefs
 .project
+/bin/
+*.properties
+demo.properties
+*.properties
+demo.properties
