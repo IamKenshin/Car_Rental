@@ -250,8 +250,12 @@ public class DataAccess {
 				int totalDays = myRs.getInt("TotalDays");
 				int totalPrice = myRs.getInt("TotalPrice");
 				String status = myRs.getString("rentalStatus");
+				int uid = myRs.getInt("uid");
+				int cID = myRs.getInt("cID");
+				int insPrice = myRs.getInt("InsurancePrice");
+				String insurance = myRs.getString("insurance");
 				
-				Rental rental = new Rental(contractNumber, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
+				Rental rental = new Rental(contractNumber, uid, cID, insurance, insPrice, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
 				list.add(rental);
 			}
 		} catch (SQLException e){
@@ -294,8 +298,12 @@ public class DataAccess {
 				int totalDays = myRs.getInt("TotalDays");
 				int totalPrice = myRs.getInt("TotalPrice");
 				String status = myRs.getString("rentalStatus");
+				int uid = myRs.getInt("uid");
+				int cID = myRs.getInt("cID");
+				int insPrice = myRs.getInt("InsurancePrice");
+				String insurance = myRs.getString("insurance");
 				
-				Rental rental = new Rental(contractNumber, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
+				Rental rental = new Rental(contractNumber, uid, cID, insurance, insPrice, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
 				list.add(rental);
 			}
 		} catch (SQLException e){
@@ -660,7 +668,7 @@ public class DataAccess {
 		ResultSet myRs = null;
 		
 		try{
-			String sql = "SELECT fname, lname, year, make, model, rental.* "
+			String sql = "SELECT fname, lname, year, make, model, uid, cID, rental.* "
 					+ "from customer, car, rental "
 					+ "where rental.Customer = customer.uid and rental.Car=car.cID and ContractNumber=?";
 			prepStmt = myConn.prepareStatement(sql);
@@ -668,6 +676,10 @@ public class DataAccess {
 			myRs = prepStmt.executeQuery();
 			while (myRs.next()){
 				int contractNumber = myRs.getInt("ContractNumber");
+				int uid = myRs.getInt("uid");
+				int cID = myRs.getInt("cID");
+				int insPrice = myRs.getInt("InsurancePrice");
+				String insurance = myRs.getString("insurance");
 				String fName = myRs.getString("fname");
 				String lName = myRs.getString("lname");
 				int year = myRs.getInt("year");
@@ -681,7 +693,8 @@ public class DataAccess {
 				int totalDays = myRs.getInt("TotalDays");
 				int totalPrice = myRs.getInt("TotalPrice");
 				String status = myRs.getString("rentalStatus");
-				rental = new Rental(contractNumber, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
+				rental = new Rental(contractNumber, uid, cID, insurance, insPrice, year, milesOut, milesIn, agencyId, totalDays, totalPrice, fName, lName, status, make, model, startDate, endDate);
+				//rental = new Rental(contractNumber, totalPrice, null, totalPrice, status, totalPrice, null, totalPrice, status)
 			}
 		} catch (SQLException e){
 			e.printStackTrace();

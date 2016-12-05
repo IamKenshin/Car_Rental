@@ -441,6 +441,39 @@ public class gui {
 		rental_add_button.setBounds(600, 480, 55, 23);
 		frame.getContentPane().add(rental_add_button);
 		
+		JButton rental_view_button = new JButton("View");
+		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_view_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int contract = Integer.parseInt(ren_contractID_text.getText());
+				
+				Rental r = dao.searchRental(contract);
+				if(r != null) {
+					ren_customerID_text.setText(String.valueOf(r.getCustomerId()));
+					ren_carID_text.setText(String.valueOf(r.getCarId()));
+					ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
+					ren_insurance_text.setText(r.getInsurance());
+					ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
+					ren_startday_text.setText(String.valueOf(r.getStartDate().getDayOfMonth()));
+					ren_startmonth_text.setText(String.valueOf(r.getStartDate().getMonthValue()));
+					ren_startyear_text.setText(String.valueOf(r.getStartDate().getYear()));
+					ren_endday_text.setText(String.valueOf(r.getEndDate().getDayOfMonth()));
+					ren_endmonth_text.setText(String.valueOf(r.getEndDate().getMonthValue()));
+					ren_endyear_text.setText(String.valueOf(r.getEndDate().getYear()));
+					ren_status_text.setText(r.getStatus());
+					ren_totalprice_text.setText(String.valueOf(r.getTotalPrice()));
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Rental Contract not found!");
+				}
+				
+
+				
+			}
+		});
+		
+		rental_view_button.setBounds(670, 480, 55, 23);
+		frame.getContentPane().add(rental_view_button);
 		
 		JLabel lblCar = new JLabel("Car");
 		lblCar.setFont(new Font("Tahoma", Font.BOLD, 13));

@@ -50,11 +50,15 @@ public class Rental {
 }
 	//this contructor is used by searchReservation or getAllReservation where it grabs a bunch of data
 	//and needs to initialize them before printing it
-	public Rental(int contractNumber, int year, int milesOut, int milesIn, int agencyId, int totalDays, int totalPrice,
+	public Rental(int contractNumber, int customerID, int carID, String insurance, int insPrice, int year, int milesOut, int milesIn, int agencyId, int totalDays, int totalPrice,
 			String fName, String lName, String status, String make, String model, LocalDate startDate,
 			LocalDate endDate) {
 		super();
 		this.contractNumber = contractNumber;
+		this.customerId = customerID;
+		this.carId = carID;
+		this.insurance = insurance;
+		this.insurancePrice = insPrice;
 		this.year = year;
 		this.milesOut = milesOut;
 		this.milesIn = milesIn;
