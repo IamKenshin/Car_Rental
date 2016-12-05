@@ -27,14 +27,38 @@ public class Rental {
 	this.totalPrice = totalPrice;
 	this.status = status;
 }
+
 	
+	public Rental(int customerId, Car car, int agencyId,
+			String insurance,int insurancePrice, Dates dates, int totalPrice, String status) {
+	super();
+	this.customerId = customerId;
+	this.carId = car.getCarId();
+	this.milesOut = car.getMileage();
+	this.agencyId = agencyId;
+	this.insurance = insurance;
+	if (this.insurance.equals("Yes")){
+		this.insurancePrice = insurancePrice;
+	} else if (this.insurance.equals("No")){
+		this.insurancePrice = 0;
+	}
+	this.startDate = dates.getStartDate();
+	this.endDate = dates.getEndDate();
+	this.totalDays = dates.getTotalDays();
+	this.totalPrice = totalPrice;
+	this.status = status;
+}
 	//this contructor is used by searchReservation or getAllReservation where it grabs a bunch of data
 	//and needs to initialize them before printing it
-	public Rental(int contractNumber, int year, int milesOut, int milesIn, int agencyId, int totalDays, int totalPrice,
+	public Rental(int contractNumber, int customerID, int carID, String insurance, int insPrice, int year, int milesOut, int milesIn, int agencyId, int totalDays, int totalPrice,
 			String fName, String lName, String status, String make, String model, LocalDate startDate,
 			LocalDate endDate) {
 		super();
 		this.contractNumber = contractNumber;
+		this.customerId = customerID;
+		this.carId = carID;
+		this.insurance = insurance;
+		this.insurancePrice = insPrice;
 		this.year = year;
 		this.milesOut = milesOut;
 		this.milesIn = milesIn;
