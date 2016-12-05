@@ -74,22 +74,11 @@ public class Rental {
 		this.endDate = endDate;
 	}
 	
-
-	public Rental (Reservation reservation, Car car, Dates dates){
-		//working on creating new rental based on reservation, car, dates and other fields
+	public Rental(String lName, int contractNumber) {
+		super();
+		this.lName = lName;
+		this.contractNumber = contractNumber;
 	
-		this.customerId = reservation.getCustomerId();
-		this.carId = car.getCarId();
-		this.milesOut = car.getMileage();
-		this.agencyId = reservation.getAgencyId();
-		this.insurance = insurance;
-		this.insurancePrice = insurancePrice;
-		
-		this.startDate = dates.getStartDate();
-		this.endDate = dates.getEndDate();
-		this.totalDays = dates.getTotalDays();
-		this.totalPrice = totalPrice;
-
 	}
 	
 	public String toString(){

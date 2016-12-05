@@ -16,9 +16,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
+import javax.swing.JFormattedTextField;
 
 public class gui {
 
@@ -59,12 +57,8 @@ public class gui {
 	private JTextField ren_agencyID_text;
 	private JTextField ren_insurance_text;
 	private JTextField ren_insurance_price_text;
-
-	private JTextField ren_start_text;
-	private JTextField ren_end_text;
-
+	private JTextField ren_totalprice_text;
 	private JTextField ren_status_text;
-	private JTextField ren_total_text;
 
 	private JLabel ren_contract_label;
 	private JLabel ren_customer_label;
@@ -72,10 +66,6 @@ public class gui {
 	private JLabel ren_agency_label;
 	private JLabel ren_insurance_label;
 	private JLabel ren_insurance_price_label;
-
-	private JLabel ren_start_label;
-	private JLabel ren_end_label;
-
 	private JLabel ren_total_label;
 	private JLabel ren_status_label;
 	
@@ -110,17 +100,68 @@ public class gui {
 	private void initialize() {
 		DataAccess dao = new DataAccess();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 932, 606);
+		frame.setBounds(100, 100, 728, 534);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		/*
-		 * 
-		 * 
-		 * Customer Textfields
-		 * 
-		 * 
-		 */	
+		JButton customer_add_button = new JButton("Add");
+		customer_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		customer_add_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String fName = customer_fName_text.getText();
+				String lName = customer_lName_text.getText();
+				int age = Integer.parseInt(customer_age_text.getText());
+				String licenceNumber = customer_licNum_text.getText();
+				String ccNumber = customer_ccNum_text.getText();
+				String customerStatus = "Reservation"; 				//customer is going to be reservation status in the beginning
+				Customer customer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
+				int customerId = dao.addCustomer(customer);
+				customer_id_text.setText(String.valueOf(customerId));
+				
+				JOptionPane.showMessageDialog(null, fName + lName + age);
+				
+				customer_fName_text.setText("");
+				customer_lName_text.setText("");
+				customer_age_text.setText("");
+				customer_licNum_text.setText("");
+				customer_ccNum_text.setText("");
+				customer_id_text.setText("");
+				
+				customer_id_text.setEditable(true);
+				customer_modify_button.setEnabled(false);
+			}
+		});
+		
+		JButton customer_modify_button = new JButton("Mod");
+		customer_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		customer_modify_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				String fName, lName, licenceNumber, ccNumber, customerStatus=null;
+				int age = 0, customerId;
+				
+				fName = customer_fName_text.getText();
+				lName = customer_lName_text.getText();
+				age = Integer.parseInt(customer_age_text.getText());
+				licenceNumber = customer_licNum_text.getText();
+				ccNumber = customer_ccNum_text.getText();
+				customerId = Integer.parseInt(customer_id_text.getText());
+			
+				Customer newCustomer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
+				dao.updateCustomer(customerId, newCustomer);
+				
+				customer_id_text.setEditable(true);
+				customer_modify_button.setEnabled(false);
+				
+				JOptionPane.showMessageDialog(null, "Updated Customer");
+			}
+		});
+		customer_add_button.setBounds(10, 249, 60, 23);
+		frame.getContentPane().add(customer_add_button);
+		
+		customer_modify_button.setBounds(144, 249, 65, 23);
+		frame.getContentPane().add(customer_modify_button);
+		customer_modify_button.setEnabled(false);
+		
 		customer_fName_text = new JTextField();
 		customer_fName_text.setBounds(106, 32, 71, 20);
 		frame.getContentPane().add(customer_fName_text);
@@ -191,104 +232,234 @@ public class gui {
 		customer_label.setBounds(63, 7, 85, 14);
 		frame.getContentPane().add(customer_label);
 		
+		//Rental Textfields
+		
+		ren_contractID_text = new JTextField();
+		ren_contractID_text.setBounds(700, 32, 68, 20);
+		frame.getContentPane().add(ren_contractID_text);
+		ren_contractID_text.setColumns(10);
+		
+		ren_customerID_text= new JTextField();
+		ren_customerID_text.setBounds(700, 63, 68, 20);
+		frame.getContentPane().add(		ren_customerID_text);
+		ren_customerID_text.setColumns(10);
+		
+		ren_carID_text= new JTextField();
+		ren_carID_text.setBounds(700, 94, 68, 20);
+		frame.getContentPane().add(ren_carID_text);
+		ren_carID_text.setColumns(10);
+		
+		ren_agencyID_text= new JTextField();
+		ren_agencyID_text.setBounds(700, 125, 68, 20);
+		frame.getContentPane().add(ren_agencyID_text);
+		ren_agencyID_text.setColumns(10);
+		
+		ren_insurance_text= new JTextField();
+		ren_insurance_text.setBounds(700, 156, 68, 20);
+		frame.getContentPane().add(ren_insurance_text);
+		ren_insurance_text.setColumns(10);
+		
+		ren_insurance_price_text= new JTextField();
+		ren_insurance_price_text.setBounds(700, 187, 68, 20);
+		frame.getContentPane().add(ren_insurance_price_text);
+		ren_insurance_price_text.setColumns(10);
+		
+		/*ren_startday_text= new JTextField();
+		ren_startday_text.setBounds(700, 218, 68, 20);
+		frame.getContentPane().add(ren_startday_text);
+		ren_startday_text.setColumns(10);
+		
+		ren_startmonth_text= new JTextField();
+		ren_startmonth_text.setBounds(700, 249, 68, 20);
+		frame.getContentPane().add(ren_startmonth_text);
+		ren_startmonth_text.setColumns(10);
+		
+		ren_startyear_text= new JTextField();
+		ren_startyear_text.setBounds(700, 280, 68, 20);
+		frame.getContentPane().add(ren_startyear_text);
+		ren_startyear_text.setColumns(10);
+		
+		/*ren_endday_text= new JTextField();
+		ren_endday_text.setBounds(700, 311, 68, 20);
+		frame.getContentPane().add(ren_endday_text);
+		ren_endday_text.setColumns(10);
+		
+		ren_endmonth_text= new JTextField();
+		ren_endmonth_text.setBounds(700, 342, 68, 20);
+		frame.getContentPane().add(ren_endmonth_text);
+		ren_endmonth_text.setColumns(10);
+		
+		ren_endyear_text= new JTextField();
+		ren_endyear_text.setBounds(700, 373, 68, 20);
+		frame.getContentPane().add(ren_endyear_text);
+		ren_endyear_text.setColumns(10);*/
+		
+		ren_totalprice_text= new JTextField();
+		ren_totalprice_text.setBounds(700, 280, 68, 20);
+		frame.getContentPane().add(ren_totalprice_text);
+		ren_totalprice_text.setColumns(10);
+		
+		ren_status_text= new JTextField();
+		ren_status_text.setBounds(700, 311, 68, 20);
+		frame.getContentPane().add(ren_status_text);
+		ren_status_text.setColumns(10);
 
-		JButton customer_add_button = new JButton("Add");
-		customer_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		customer_add_button.addActionListener(new ActionListener() {
+		//Rental Labels
+		
+		JLabel lblRen = new JLabel("Rental");
+		lblRen.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblRen.setBounds(680, 8, 100, 30);
+		frame.getContentPane().add(lblRen);
+		
+		ren_contract_label = new JLabel("Contract#");
+		ren_contract_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_contract_label.setBounds(600, 35, 132, 14);
+		frame.getContentPane().add(ren_contract_label);
+		
+		ren_customer_label= new JLabel("Customer#");
+		ren_customer_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_customer_label.setBounds(600, 66, 132, 14);
+		frame.getContentPane().add(ren_customer_label);
+		
+		ren_car_label= new JLabel("Car#");
+		ren_car_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_car_label.setBounds(600, 97, 132, 14);
+		frame.getContentPane().add(ren_car_label);
+		
+		ren_agency_label= new JLabel("Agency#");
+		ren_agency_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_agency_label.setBounds(600, 128, 132, 14);
+		frame.getContentPane().add(ren_agency_label);
+		
+		ren_insurance_label= new JLabel("Insurance");
+		ren_insurance_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_insurance_label.setBounds(600, 159, 132, 14);
+		frame.getContentPane().add(ren_insurance_label);
+		
+		ren_insurance_price_label= new JLabel("Insurance $");
+		ren_insurance_price_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_insurance_price_label.setBounds(600, 190, 132, 14);
+		frame.getContentPane().add(ren_insurance_price_label);
 
+		ren_total_label= new JLabel("Total Price");
+		ren_total_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_total_label.setBounds(600, 283, 132, 14);
+		frame.getContentPane().add(ren_total_label);
+		
+		ren_status_label= new JLabel("Rental Status");
+		ren_status_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_status_label.setBounds(600, 314, 132, 14);
+		frame.getContentPane().add(ren_status_label);
+		
+		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		
+		JLabel ren_startdate_label= new JLabel("Start Date");
+		ren_startdate_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_startdate_label.setBounds(600, 221, 132, 14);
+		frame.getContentPane().add(ren_startdate_label);
+		
+		JFormattedTextField ren_startdate_text = new JFormattedTextField(sdf);
+		ren_startdate_text.setBounds(700, 218, 68, 20);
+		frame.getContentPane().add(ren_startdate_text);
+		ren_startdate_text.setColumns(10);
+		ren_startdate_text.setText("");
+		JLabel ren_enddate_label= new JLabel("End Date");
+		ren_enddate_label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ren_enddate_label.setBounds(600, 252, 132, 14);
+		frame.getContentPane().add(ren_enddate_label);
+		
+		
+		JFormattedTextField ren_enddate_text = new JFormattedTextField(sdf);
+		ren_enddate_text.setBounds(700, 249, 68, 20);
+		frame.getContentPane().add(ren_enddate_text);
+		ren_enddate_text.setColumns(10);
+		ren_enddate_text.setText("");
+		
+		JButton rental_add_button = new JButton("Add");
+		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_add_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String fName = customer_fName_text.getText();
-				String lName = customer_lName_text.getText();
-				int age = Integer.parseInt(customer_age_text.getText());
-				String licenceNumber = customer_licNum_text.getText();
-				String ccNumber = customer_ccNum_text.getText();
-				String customerStatus = "Reservation"; 				//customer is going to be reservation status in the beginning
-				Customer customer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
-				int customerId = dao.addCustomer(customer);
-				customer_id_text.setText(String.valueOf(customerId));
 				
+				int customer = Integer.parseInt(ren_customerID_text.getText());
+				int car = Integer.parseInt(ren_carID_text.getText());
+				int agency = Integer.parseInt(ren_agencyID_text.getText());
+				String insurance = ren_insurance_text.getText();
+				int insPrice = Integer.parseInt(ren_insurance_price_text.getText());
+				LocalDate start = LocalDate.parse(ren_startdate_text.getText(), sdf);
+				LocalDate end = LocalDate.parse(ren_enddate_text.getText(), sdf);
+				String status = ren_status_text.getText();
+				
+				Car c = dao.searchCar(car);
 
-				JOptionPane.showMessageDialog(null, fName + lName + age);
+				int totalDays = (int) (end.toEpochDay() - start.toEpochDay());
 				
-				customer_fName_text.setText("");
-				customer_lName_text.setText("");
-				customer_age_text.setText("");
-				customer_licNum_text.setText("");
-				customer_ccNum_text.setText("");
-				customer_id_text.setText("");
+				Dates d = new Dates(start, end, totalDays);
 				
-				customer_id_text.setEditable(true);
-				customer_modify_button.setEnabled(false);
-			}
-		});
-		
-		JButton customer_modify_button = new JButton("Mod");
-		customer_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		customer_modify_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
-				String fName, lName, licenceNumber, ccNumber, customerStatus=null;
-				int age = 0, customerId;
+				int totalPrice = (c.getPrice() * totalDays);
+				int underageFee = 30;
+				DataAccess dao = new DataAccess();
 				
-				fName = customer_fName_text.getText();
-				lName = customer_lName_text.getText();
-				age = Integer.parseInt(customer_age_text.getText());
-				licenceNumber = customer_licNum_text.getText();
-				ccNumber = customer_ccNum_text.getText();
-				customerId = Integer.parseInt(customer_id_text.getText());
-			
-				Customer newCustomer = new Customer(fName, lName, age, licenceNumber, ccNumber, customerStatus);
-				dao.updateCustomer(customerId, newCustomer);
-				
-				customer_id_text.setEditable(true);
-				customer_modify_button.setEnabled(false);
-				
-				JOptionPane.showMessageDialog(null, "Updated Customer");
-			}
-		});
-		customer_add_button.setBounds(10, 249, 60, 23);
-		frame.getContentPane().add(customer_add_button);
-		
-		customer_modify_button.setBounds(144, 249, 65, 23);
-		frame.getContentPane().add(customer_modify_button);
-		customer_modify_button.setEnabled(false);
-		
-		JButton customer_view_button = new JButton("View");
-		customer_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		customer_view_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {			
-				int customerID = Integer.parseInt(customer_id_text.getText());
-				Customer customer = dao.searchCustomer(customerID);
-				if (customer != null){
-					customer_fName_text.setText(customer.getFname());
-					customer_lName_text.setText(customer.getLname());
-					customer_age_text.setText(String.valueOf(customer.getAge()));
-					customer_licNum_text.setText(customer.getLicenceNumber());
-					customer_ccNum_text.setText(customer.getCcNumber());
-					customer_status_text.setText(customer.getStatus());
-					customer_id_text.setEditable(false);
-					customer_modify_button.setEnabled(true);
-				} else {
-					JOptionPane.showMessageDialog(null, "Customer not found!");
+				if (dao.under25(customer))
+				{
+					totalPrice = totalPrice + underageFee;
 				}
-
-
+				Rental rental = new Rental(customer, c, agency, insurance, insPrice, d, totalPrice, status);
+				
+				if (insurance.equals("Yes"))
+				{
+					totalPrice = totalPrice + insPrice;
+				}
+				rental.setTotalPrice(totalPrice);
+				
+				int rentalID = dao.rentalCheckOut(rental, c, d);
+				ren_contractID_text.setText(String.valueOf(rentalID));
+				
+				ren_status_text.setText(dao.searchRental(rentalID).getStatus());
+				ren_totalprice_text.setText(String.valueOf(totalPrice));
+				JOptionPane.showMessageDialog(null, "Rental Contract Number: " + rentalID + ". Total Price is " + totalPrice);
+				
+				ren_contractID_text.setEditable(true);
+				//ren_modify_button.setEnabled(false); //not implemented yet
 			}
 		});
-		customer_view_button.setBounds(72, 249, 70, 23);
-		frame.getContentPane().add(customer_view_button);
 		
-		/*
-		 * 
-		 * 
-		 * Car Textfields
-		 * 
-		 * 
-		 */	
+		rental_add_button.setBounds(600, 480, 55, 23);
+		frame.getContentPane().add(rental_add_button);
 		
-		JLabel car_label = new JLabel("Car");
-		car_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		car_label.setBounds(257, 8, 74, 14);
-		frame.getContentPane().add(car_label);
+		JButton rental_view_button = new JButton("View");
+		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_view_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int contract = Integer.parseInt(ren_contractID_text.getText());
+				
+				Rental r = dao.searchRental(contract);
+				if(r != null) {
+					ren_customerID_text.setText(String.valueOf(r.getCustomerId()));
+					ren_carID_text.setText(String.valueOf(r.getCarId()));
+					ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
+					ren_insurance_text.setText(r.getInsurance());
+					ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
+					ren_startdate_text.setText(String.valueOf(r.getStartDate().format(sdf)));
+					ren_enddate_text.setText(String.valueOf(r.getEndDate().format(sdf)));
+					ren_status_text.setText(r.getStatus());
+					ren_totalprice_text.setText(String.valueOf(r.getTotalPrice()));
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Rental Contract not found!");
+				}
+				
+
+				
+			}
+		});
+		
+		rental_view_button.setBounds(670, 480, 55, 23);
+		frame.getContentPane().add(rental_view_button);
+		
+		JLabel lblCar = new JLabel("Car");
+		lblCar.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblCar.setBounds(257, 8, 74, 14);
+		frame.getContentPane().add(lblCar);
 		
 		JLabel car_year_label = new JLabel("Year");
 		car_year_label.setBounds(221, 35, 132, 14);
@@ -449,6 +620,30 @@ public class gui {
 		frame.getContentPane().add(car_modify_button);
 		car_modify_button.setEnabled(false);
 		
+		JButton customer_view_button = new JButton("View");
+		customer_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		customer_view_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {			
+				int customerID = Integer.parseInt(customer_id_text.getText());
+				Customer customer = dao.searchCustomer(customerID);
+				if (customer != null){
+					customer_fName_text.setText(customer.getFname());
+					customer_lName_text.setText(customer.getLname());
+					customer_age_text.setText(String.valueOf(customer.getAge()));
+					customer_licNum_text.setText(customer.getLicenceNumber());
+					customer_ccNum_text.setText(customer.getCcNumber());
+					customer_status_text.setText(customer.getStatus());
+					customer_id_text.setEditable(false);
+					customer_modify_button.setEnabled(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Customer not found!");
+				}
+
+
+			}
+		});
+		customer_view_button.setBounds(72, 249, 70, 23);
+		frame.getContentPane().add(customer_view_button);
 		
 		car_view_button = new JButton("View");
 		car_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -477,14 +672,11 @@ public class gui {
 		car_view_button.setBounds(275, 320, 60, 23);
 		frame.getContentPane().add(car_view_button);
 		
+		JLabel lblRes = new JLabel("Reservation");
+		lblRes.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblRes.setBounds(450, 8, 100, 30);
+		frame.getContentPane().add(lblRes);
 		
-		/*
-		 * 
-		 * 
-		 * Reservation Textfields
-		 * 
-		 * 
-		 */	
 		JLabel res_cust_label = new JLabel("Customer");
 		res_cust_label.setBounds(404, 35, 46, 14);
 		frame.getContentPane().add(res_cust_label);
@@ -639,217 +831,6 @@ public class gui {
 		res_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		res_view_button.setBounds(480, 223, 60, 23);
 		frame.getContentPane().add(res_view_button);
-		
-		/*
-		 * 
-		 * 
-		 * Rental Textfields
-		 * 
-		 * 
-		 */	
-		
-		ren_contractID_text = new JTextField();
-		ren_contractID_text.setBounds(700, 32, 68, 20);
-		frame.getContentPane().add(ren_contractID_text);
-		ren_contractID_text.setColumns(10);
-		
-		ren_customerID_text= new JTextField();
-		ren_customerID_text.setBounds(700, 63, 68, 20);
-		frame.getContentPane().add(		ren_customerID_text);
-		ren_customerID_text.setColumns(10);
-		
-		ren_carID_text= new JTextField();
-		ren_carID_text.setBounds(700, 94, 68, 20);
-		frame.getContentPane().add(ren_carID_text);
-		ren_carID_text.setColumns(10);
-		
-		ren_agencyID_text= new JTextField();
-		ren_agencyID_text.setBounds(700, 125, 68, 20);
-		frame.getContentPane().add(ren_agencyID_text);
-		ren_agencyID_text.setColumns(10);
-		
-		ren_insurance_text= new JTextField();
-		ren_insurance_text.setBounds(700, 156, 68, 20);
-		frame.getContentPane().add(ren_insurance_text);
-		ren_insurance_text.setColumns(10);
-		
-		ren_insurance_price_text= new JTextField();
-		ren_insurance_price_text.setBounds(700, 187, 68, 20);
-		frame.getContentPane().add(ren_insurance_price_text);
-		ren_insurance_price_text.setColumns(10);
-		
-		ren_start_text= new JTextField();
-		ren_start_text.setBounds(700, 217, 68, 20);
-		frame.getContentPane().add(ren_start_text);
-		ren_start_text.setColumns(10);
-		
-		ren_end_text= new JTextField();
-		ren_end_text.setBounds(700, 250, 68, 20);
-		frame.getContentPane().add(ren_end_text);
-		ren_end_text.setColumns(10);
-		
-		ren_status_text= new JTextField();
-		ren_status_text.setBounds(700, 280, 68, 20);
-		frame.getContentPane().add(ren_status_text);
-		ren_status_text.setColumns(10);
-		
-		ren_total_text= new JTextField();
-		ren_total_text.setBounds(700, 311, 68, 20);
-		frame.getContentPane().add(ren_total_text);
-		ren_total_text.setColumns(10);
-		
-		ren_contract_label = new JLabel("Contract#");
-		ren_contract_label.setBounds(600, 35, 132, 14);
-		frame.getContentPane().add(ren_contract_label);
-		
-		ren_customer_label= new JLabel("Customer#");
-		ren_customer_label.setBounds(600, 66, 132, 14);
-		frame.getContentPane().add(ren_customer_label);
-		
-		ren_car_label= new JLabel("Car#");
-		ren_car_label.setBounds(600, 97, 132, 14);
-		frame.getContentPane().add(ren_car_label);
-		
-		ren_agency_label= new JLabel("Agency#");
-		ren_agency_label.setBounds(600, 128, 132, 14);
-		frame.getContentPane().add(ren_agency_label);
-		
-		ren_insurance_label= new JLabel("Insurance");
-		ren_insurance_label.setBounds(600, 159, 132, 14);
-		frame.getContentPane().add(ren_insurance_label);
-		
-		ren_insurance_price_label= new JLabel("Insurance $");
-		ren_insurance_price_label.setBounds(600, 190, 132, 14);
-		frame.getContentPane().add(ren_insurance_price_label);
-		
-		ren_start_label= new JLabel("Start Date");
-		ren_start_label.setBounds(600, 221, 132, 14);
-		frame.getContentPane().add(ren_start_label);
-		
-		ren_end_label= new JLabel("End Date");
-		ren_end_label.setBounds(600, 252, 132, 14);
-		frame.getContentPane().add(ren_end_label);
-		
-		ren_total_label= new JLabel("Total Price $");
-		ren_total_label.setBounds(600, 317, 132, 14);
-		frame.getContentPane().add(ren_total_label);
-		
-		ren_status_label= new JLabel("Rental Status");
-		ren_status_label.setBounds(600, 286, 132, 14);
-		frame.getContentPane().add(ren_status_label);
-		
-		JButton rental_add_button = new JButton("Add");
-		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		
-		rental_add_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				int customer = Integer.parseInt(ren_customerID_text.getText());
-				int car = Integer.parseInt(ren_carID_text.getText());
-				int agency = Integer.parseInt(ren_agencyID_text.getText());
-				String insurance = ren_insurance_text.getText();
-				int insPrice = Integer.parseInt(ren_insurance_price_text.getText());
-				LocalDate startDate = LocalDate.parse(ren_start_text.getText());
-				LocalDate endDate = LocalDate.parse(ren_end_text.getText());
-				String status = ren_total_text.getText();
-				
-				Car c = dao.searchCar(car);
-				int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
-				
-				Dates d = new Dates(startDate, endDate, totalDays);
-				
-				int totalPrice = (c.getPrice() * totalDays);
-				int underageFee = 30;
-				DataAccess dao = new DataAccess();
-				
-				if (dao.under25(customer))
-				{
-					totalPrice = totalPrice + underageFee;
-				}
-				Rental rental = new Rental(customer, c, agency, insurance, insPrice, d, totalPrice, status);
-				
-				if (insurance.equals("Yes"))
-				{
-					totalPrice = totalPrice + insPrice;
-				}
-				rental.setTotalPrice(totalPrice);
-				
-				int rentalID = dao.rentalCheckOut(rental, c, d);
-				ren_contractID_text.setText(String.valueOf(rentalID));
-				
-				ren_total_text.setText(dao.searchRental(rentalID).getStatus());
-				ren_status_text.setText(String.valueOf(totalPrice));
-				JOptionPane.showMessageDialog(null, "Rental Contract Number: " + rentalID + ". Total Price is " + totalPrice);
-				
-				ren_contractID_text.setEditable(true);
-				//ren_modify_button.setEnabled(false); //not implemented yet
-			}
-		});
-		
-		rental_add_button.setBounds(600, 356, 55, 23);
-		frame.getContentPane().add(rental_add_button);
-		
-		JButton rental_view_button = new JButton("View");
-		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		rental_view_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (!ren_contractID_text.getText().isEmpty()){				
-					int contract = Integer.parseInt(ren_contractID_text.getText());
-					Rental r = dao.searchRental(contract);
-					if(r != null) {
-						ren_customerID_text.setText(String.valueOf(r.getCustomerId()));
-						ren_carID_text.setText(String.valueOf(r.getCarId()));
-						ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
-						ren_insurance_text.setText(r.getInsurance());
-						ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
-						ren_start_text.setText(r.getStartDate().toString());
-						ren_end_text.setText(r.getEndDate().toString());
-						ren_status_text.setText(r.getStatus());
-						ren_total_text.setText(String.valueOf(r.getTotalPrice()));
-						
-						Customer cust = dao.searchCustomer(r.getCustomerId());
-						Car car = dao.searchCar(r.getCarId());
-						
-						customer_fName_text.setText(cust.getFname());
-						customer_lName_text.setText(cust.getLname());
-						customer_age_text.setText(String.valueOf(cust.getAge()));
-						customer_licNum_text.setText(cust.getLicenceNumber());
-						customer_ccNum_text.setText(cust.getCcNumber());
-						customer_id_text.setText(String.valueOf(cust.getCustomerId()));
-						customer_add_button.setEnabled(false);
-						
-						car_year_text.setText(String.valueOf(car.getYear()));
-						car_make_text.setText(car.getMake());
-						car_model_text.setText(car.getModel());
-						car_mileage_text.setText(String.valueOf(car.getMileage()));
-						car_condition_text.setText(car.getCondition());
-						car_id_text.setText(String.valueOf(car.getCarId()));
-						car_price_text.setText(String.valueOf(car.getPrice()));
-						car_type_text.setText(car.getType());
-						car_add_button.setEnabled(false);
-					}	else 
-						JOptionPane.showMessageDialog(null, "Rental Contract not found!");
-				}	else
-					JOptionPane.showMessageDialog(null, "Not a valid contract number");
-			}
-		});
-		
-		rental_view_button.setBounds(665, 356, 55, 23);
-		frame.getContentPane().add(rental_view_button);		
-		
-		JLabel res_label = new JLabel("Reservation");
-		res_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		res_label.setBounds(425, 7, 98, 14);
-		frame.getContentPane().add(res_label);
-		
-		JLabel ren_label = new JLabel("Rental");
-		ren_label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		ren_label.setBounds(660, 8, 55, 14);
-		frame.getContentPane().add(ren_label);
-
-		
-		
-		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{customer_fName_text, customer_lName_text, customer_age_text, customer_licNum_text, customer_ccNum_text, customer_status_text, customer_id_text, customer_add_button, customer_view_button, customer_status_label, customer_modify_button, car_year_text, car_make_text, car_model_text, car_mileage_text, car_condition_text, car_status_text, car_id_text, car_price_text, car_type_text, car_add_button, car_view_button, car_modify_button, res_cust_text, res_agency_text, res_start_text, res_end_text, res_total_text, res_id_text, res_add_button, res_view_button, res_cancel_button, res_modify_button, ren_contractID_text, ren_customerID_text, ren_carID_text, ren_agencyID_text, ren_insurance_text, ren_insurance_price_text, ren_start_text, ren_end_text, ren_status_text, ren_total_text, rental_add_button, rental_view_button, customer_fName_label, customer_lName_label, customer_age_label, customer_licNum_label, customer_ccNum_label, customer_id_label, customer_label, ren_contract_label, ren_customer_label, ren_car_label, ren_agency_label, ren_insurance_label, ren_insurance_price_label, ren_start_label, ren_end_label, ren_total_label, ren_status_label, car_label, car_year_label, car_make_label, car_model_label, car_mileage_label, car_condition_label, car_status_label, car_id_label, car_price_label, car_type_label, res_cust_label, res_agency_label, res_start_label, res_end_label, res_total_label, res_id_label}));
 		
 	}
 }
