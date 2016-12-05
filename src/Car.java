@@ -17,13 +17,7 @@ public class Car {
 		this.carStatus = carStatus;
 		
 	}
-	
-	//this constructor is used by getoldestcar and getnewestcar 
-	public Car(int year) {
-		super();
-		this.year = year;
-		// TODO Auto-generated constructor stub
-	}
+
 	public int getCarId() {
 		return carId;
 	}

@@ -49,7 +49,7 @@ public class DataAccessTester {
 		{
 			totalPrice = totalPrice + underageFee;
 		}
-		Rental rental = new Rental(contractNumber, c.getCustomerId(), car2, agencyId, insurance, insurancePrice, dates, totalPrice, status);
+		//Rental rental = new Rental(contractNumber, c.getCustomerId(), car2, agencyId, insurance, insurancePrice, dates, totalPrice, status);
 //		dao.getAllReservations();		
 		//dao.addCustomer(customer);	//works
 		//dao.addCar(car);			//works
@@ -87,7 +87,9 @@ public class DataAccessTester {
 //		System.out.println(dao.searchRental(8));
 //		System.out.println(dao.searchCustomer(2));
 		//dao.updateCustomer(5, new Customer("Jake", "Snake", 90, "567890", "4567890", "Test"));
-		
+		System.out.println(dao.getOldestCarYear());
+		System.out.println(dao.getNewestCarYear());
+		System.out.println(dao.getAverageCarYear());
 	}
 
 }

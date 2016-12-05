@@ -317,10 +317,9 @@ public class DataAccess {
 	
 	/**
 	 * This shows the oldest car year available. 
-	 * @return
+	 * @return year of oldest car(s).
 	 */
-	public List<Car> getOldestCarYear(){
-		List<Car> list = new ArrayList<>();
+	public int getOldestCarYear(){
 		Statement stmt = null;
 		ResultSet myRs = null;
 		
@@ -330,10 +329,7 @@ public class DataAccess {
 					+ " FROM car");
 			
 			while (myRs.next()){
-				int minYear = myRs.getInt("MIN(year)");
-				
-				Car car = new Car(minYear);
-				list.add(car);
+				return myRs.getInt("MIN(year)");
 			}
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -341,15 +337,14 @@ public class DataAccess {
 		finally {
 			close(stmt, myRs);
 		}
-		return list;
+		return -1;
 	}
 	
 	/**
 	 * This shows the newest car year available. 
-	 * @return
+	 * @return year of newest car(s).
 	 */
-	public List<Car> getNewestCarYear(){
-		List<Car> list = new ArrayList<>();
+	public int getNewestCarYear(){
 		Statement stmt = null;
 		ResultSet myRs = null;
 		
@@ -359,10 +354,8 @@ public class DataAccess {
 					+ " FROM car");
 			
 			while (myRs.next()){
-				int maxYear = myRs.getInt("Max(year)");
+				return myRs.getInt("Max(year)");
 				
-				Car car = new Car(maxYear);
-				list.add(car);
 			}
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -370,15 +363,14 @@ public class DataAccess {
 		finally {
 			close(stmt, myRs);
 		}
-		return list;
+		return -1;
 	}
 	
 	/**
 	 * This shows the average car year available. 
 	 * @return
 	 */
-	public List<Car> getAverageCarYear(){
-		List<Car> list = new ArrayList<>();
+	public double getAverageCarYear(){
 		Statement stmt = null;
 		ResultSet myRs = null;
 		
@@ -388,10 +380,8 @@ public class DataAccess {
 					+ " FROM car");
 			
 			while (myRs.next()){
-				int avgYear = myRs.getInt("AVG(year)");
-				
-				Car car = new Car(avgYear);
-				list.add(car);
+				return myRs.getDouble("AVG(year)");
+
 			}
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -399,7 +389,7 @@ public class DataAccess {
 		finally {
 			close(stmt, myRs);
 		}
-		return list;
+		return -1;
 	} 
 	
 	/**
