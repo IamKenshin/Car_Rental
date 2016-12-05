@@ -74,6 +74,13 @@ public class Rental {
 		this.endDate = endDate;
 	}
 	
+	public Rental(String lName, int contractNumber) {
+		super();
+		this.lName = lName;
+		this.contractNumber = contractNumber;
+	
+	}
+	
 	public String toString(){
 		return contractNumber  + " | " + fName  + " " + lName  + " | " + year  + " " + make + " " +  model + " | " + 
 				milesOut  + " - " + milesIn  + " | " + startDate + " till " +  endDate  + " | " + totalDays  + "days | $" + totalPrice 
