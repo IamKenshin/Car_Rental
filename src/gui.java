@@ -745,7 +745,7 @@ public class gui {
 				int underageFee = 30;
 				DataAccess dao = new DataAccess();
 				
-				if (dao.under25(customer.getAge()))
+				if (customer.getAge() < 25)
 				{
 					totalPrice = totalPrice + underageFee;
 				}
