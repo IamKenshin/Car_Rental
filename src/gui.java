@@ -793,7 +793,7 @@ public class gui {
 					int rentalNumber = Integer.parseInt(ren_contractID_text.getText());
 					Rental rental = dao.searchRental(rentalNumber);
 					if (rental != null){
-						if (rental.getStatus() == "onRent"){
+						if (rental.getStatus().equals("onRent")){
 							int milesIn = Integer.parseInt((JOptionPane.showInputDialog("Enter the miles on the car: ")));
 							dao.rentalCheckIn(rentalNumber, milesIn);		
 							ren_status_text.setText(rental.getStatus());
