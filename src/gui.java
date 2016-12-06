@@ -555,8 +555,8 @@ public class gui {
 				
 				customerId = Integer.parseInt(res_cust_text.getText());
 				agencyId = Integer.parseInt(res_agency_text.getText());
-				startDate = LocalDate.parse(res_start_text.getText());
-				endDate = LocalDate.parse(res_end_text.getText());
+				startDate = LocalDate.parse(res_start_text.getText(), sdf);
+				endDate = LocalDate.parse(res_end_text.getText(), sdf);
 				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 				Dates dates = new Dates(startDate, endDate, totalDays);
 				
