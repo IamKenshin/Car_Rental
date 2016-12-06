@@ -762,8 +762,8 @@ public class gui {
 				int rentalID = dao.rentalCheckOut(rental, c, d);
 				ren_contractID_text.setText(String.valueOf(rentalID));
 				
-				ren_total_text.setText(dao.searchRental(rentalID).getStatus());
-				ren_status_text.setText(String.valueOf(totalPrice));
+				ren_status_text.setText(dao.searchRental(rentalID).getStatus());
+				ren_total_text.setText(String.valueOf(totalPrice));
 				JOptionPane.showMessageDialog(null, "Rental Contract Number: " + rentalID + ". Total Price is " + totalPrice);
 				
 				ren_contractID_text.setEditable(true);
@@ -831,8 +831,8 @@ public class gui {
 				insurance = ren_insurance_text.getText();
 				
 				//insurancePrice = Integer.parseInt(ren_insurance_price_text.getText());
-				startDate = LocalDate.parse(ren_start_text.getText());
-				endDate = LocalDate.parse(ren_end_text.getText());
+				startDate = LocalDate.parse(ren_start_text.getText(), sdf);
+				endDate = LocalDate.parse(ren_end_text.getText(), sdf);
 				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 				status = ren_status_text.getText();
 				
