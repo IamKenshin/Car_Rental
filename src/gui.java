@@ -16,7 +16,9 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
+
 import javax.swing.JFormattedTextField;
+
 
 public class gui {
 
@@ -72,7 +74,7 @@ public class gui {
 			
 
 	/**
-	 * Launch the application.
+	 * Launch the application
 	 */
 	public static void main(String[] args) {	
 		EventQueue.invokeLater(new Runnable() {
@@ -832,5 +834,6 @@ public class gui {
 		res_view_button.setBounds(480, 223, 60, 23);
 		frame.getContentPane().add(res_view_button);
 		
+
 	}
 }
