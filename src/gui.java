@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Component;
+
+import javax.naming.directory.SearchResult;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
@@ -583,8 +585,8 @@ public class gui {
 					customer_ccNum_text.setText(customer.getCcNumber());
 					customer_id_text.setText(String.valueOf(customer.getCustomerId()));
 					
-					res_id_text.setEditable(false);
-					customer_id_text.setEditable(false);
+//					res_id_text.setEditable(false);
+//					customer_id_text.setEditable(false);
 					res_modify_button.setEnabled(true);
 					res_cancel_button.setEnabled(true);
 				} else
@@ -750,62 +752,7 @@ public class gui {
 		});
 		
 		rental_checkOut_button.setBounds(600, 356, 85, 23);
-		frame.getContentPane().add(rental_checkOut_button);
-		
-		JButton rental_view_button = new JButton("View");
-		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		rental_view_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (!ren_contractID_text.getText().isEmpty()){				
-					int contract = Integer.parseInt(ren_contractID_text.getText());
-					Rental r = dao.searchRental(contract);
-					if(r != null) {
-						ren_customerID_text.setText(String.valueOf(r.getCustomerId()));
-						ren_carID_text.setText(String.valueOf(r.getCarId()));
-						ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
-						ren_insurance_text.setText(r.getInsurance());
-						ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
-						ren_start_text.setText(r.getStartDate().toString());
-						ren_end_text.setText(r.getEndDate().toString());
-						ren_status_text.setText(r.getStatus());
-						ren_total_text.setText(String.valueOf(r.getTotalPrice()));
-						
-						Customer cust = dao.searchCustomer(r.getCustomerId());
-						Car car = dao.searchCar(r.getCarId());
-						
-						customer_fName_text.setText(cust.getFname());
-						customer_lName_text.setText(cust.getLname());
-						customer_age_text.setText(String.valueOf(cust.getAge()));
-						customer_licNum_text.setText(cust.getLicenceNumber());
-						customer_ccNum_text.setText(cust.getCcNumber());
-						customer_id_text.setText(String.valueOf(cust.getCustomerId()));
-						customer_add_button.setEnabled(false);
-						
-						car_year_text.setText(String.valueOf(car.getYear()));
-						car_make_text.setText(car.getMake());
-						car_model_text.setText(car.getModel());
-						car_mileage_text.setText(String.valueOf(car.getMileage()));
-						car_condition_text.setText(car.getCondition());
-						car_id_text.setText(String.valueOf(car.getCarId()));
-						car_price_text.setText(String.valueOf(car.getPrice()));
-						car_type_text.setText(car.getType());
-						car_add_button.setEnabled(false);
-						
-//						ren_contractID_text.setEditable(false);
-//						ren_customerID_text.setEditable(false);
-//						ren_start_text.setEditable(false);
-//						ren_status_text.setEditable(false);
-//						ren_total_text.setEditable(false);
-						
-					}	else 
-						JOptionPane.showMessageDialog(null, "Rental Contract not found!");
-				}	else
-					JOptionPane.showMessageDialog(null, "Not a valid contract number");
-			}
-		});
-		
-		rental_view_button.setBounds(700, 356, 70, 23);
-		frame.getContentPane().add(rental_view_button);		
+		frame.getContentPane().add(rental_checkOut_button);	
 		
 		JLabel res_label = new JLabel("Reservation");
 		res_label.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -819,20 +766,34 @@ public class gui {
 		
 		JButton rental_checkIn_button = new JButton("Check In");
 		rental_checkIn_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		
 		rental_checkIn_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!ren_contractID_text.getText().isEmpty()){		
 					int rentalNumber = Integer.parseInt(ren_contractID_text.getText());
-					int milesIn = Integer.parseInt((JOptionPane.showInputDialog("Enter the miles on the car")));
-					System.out.println(milesIn);
+					Rental rental = dao.searchRental(rentalNumber);
+					if (rental != null){
+						if (rental.getStatus() == "onRent"){
+							int milesIn = Integer.parseInt((JOptionPane.showInputDialog("Enter the miles on the car: ")));
+							dao.rentalCheckIn(rentalNumber, milesIn);		
+							ren_status_text.setText(rental.getStatus());
+							JOptionPane.showMessageDialog(null, "Rental returned!");
+						} else {
+							JOptionPane.showMessageDialog(null, "Not an active rental!");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Not a valid contract number!");
+					}
+
 				} else {
-					JOptionPane.showMessageDialog(null, "Not a valid contract number");
+					JOptionPane.showMessageDialog(null, "Please enter a contract number!");
 				}
 				
 			}
 		});
 		rental_checkIn_button.setBounds(600, 390, 85, 23);
 		frame.getContentPane().add(rental_checkIn_button);
+		rental_checkIn_button.setEnabled(false);
 		
 		rental_modify_button = new JButton("Mod");
 		rental_modify_button.addActionListener(new ActionListener() {
@@ -889,7 +850,65 @@ public class gui {
 		rental_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		rental_modify_button.setBounds(700, 390, 70, 23);
 		frame.getContentPane().add(rental_modify_button);
-
+		rental_modify_button.setEnabled(false);
+		
+		JButton rental_view_button = new JButton("View");
+		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_view_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!ren_contractID_text.getText().isEmpty()){				
+					int contract = Integer.parseInt(ren_contractID_text.getText());
+					Rental r = dao.searchRental(contract);
+					if(r != null) {
+						ren_customerID_text.setText(String.valueOf(r.getCustomerId()));
+						ren_carID_text.setText(String.valueOf(r.getCarId()));
+						ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
+						ren_insurance_text.setText(r.getInsurance());
+						ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
+						ren_start_text.setText(r.getStartDate().toString());
+						ren_end_text.setText(r.getEndDate().toString());
+						ren_status_text.setText(r.getStatus());
+						ren_total_text.setText(String.valueOf(r.getTotalPrice()));
+						
+						Customer cust = dao.searchCustomer(r.getCustomerId());
+						Car car = dao.searchCar(r.getCarId());
+						
+						customer_fName_text.setText(cust.getFname());
+						customer_lName_text.setText(cust.getLname());
+						customer_age_text.setText(String.valueOf(cust.getAge()));
+						customer_licNum_text.setText(cust.getLicenceNumber());
+						customer_ccNum_text.setText(cust.getCcNumber());
+						customer_id_text.setText(String.valueOf(cust.getCustomerId()));
+						customer_add_button.setEnabled(false);
+						
+						car_year_text.setText(String.valueOf(car.getYear()));
+						car_make_text.setText(car.getMake());
+						car_model_text.setText(car.getModel());
+						car_mileage_text.setText(String.valueOf(car.getMileage()));
+						car_condition_text.setText(car.getCondition());
+						car_id_text.setText(String.valueOf(car.getCarId()));
+						car_price_text.setText(String.valueOf(car.getPrice()));
+						car_type_text.setText(car.getType());
+						car_add_button.setEnabled(false);
+						
+//						ren_contractID_text.setEditable(false);
+//						ren_customerID_text.setEditable(false);
+//						ren_start_text.setEditable(false);
+//						ren_status_text.setEditable(false);
+//						ren_total_text.setEditable(false);
+						
+						rental_checkIn_button.setEnabled(true);
+						rental_modify_button.setEnabled(true);
+						
+					}	else 
+						JOptionPane.showMessageDialog(null, "Rental Contract not found!");
+				}	else
+					JOptionPane.showMessageDialog(null, "Not a valid contract number");
+			}
+		});
+		
+		rental_view_button.setBounds(700, 356, 70, 23);
+		frame.getContentPane().add(rental_view_button);	
 		
 		
 	}
