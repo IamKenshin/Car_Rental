@@ -69,6 +69,7 @@ public class gui {
 	private JLabel ren_end_label;
 	private JLabel ren_total_label;
 	private JLabel ren_status_label;
+	private JButton rental_modify_button;
 	
 			
 
@@ -632,6 +633,7 @@ public class gui {
 		ren_insurance_price_text.setBounds(700, 187, 68, 20);
 		frame.getContentPane().add(ren_insurance_price_text);
 		ren_insurance_price_text.setColumns(10);
+		ren_insurance_price_text.setEditable(false);
 		
 		ren_start_text= new JTextField();
 		ren_start_text.setBounds(700, 217, 68, 20);
@@ -647,11 +649,13 @@ public class gui {
 		ren_status_text.setBounds(700, 280, 68, 20);
 		frame.getContentPane().add(ren_status_text);
 		ren_status_text.setColumns(10);
+		ren_status_text.setEditable(false);
 		
 		ren_total_text= new JTextField();
 		ren_total_text.setBounds(700, 311, 68, 20);
 		frame.getContentPane().add(ren_total_text);
 		ren_total_text.setColumns(10);
+		ren_total_text.setEditable(false);
 		
 		ren_contract_label = new JLabel("Contract#");
 		ren_contract_label.setBounds(600, 35, 132, 14);
@@ -693,22 +697,24 @@ public class gui {
 		ren_status_label.setBounds(600, 286, 132, 14);
 		frame.getContentPane().add(ren_status_label);
 		
-		JButton rental_add_button = new JButton("Add");
-		rental_add_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		JButton rental_checkOut_button = new JButton("Check Out");
+		rental_checkOut_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		
-		rental_add_button.addActionListener(new ActionListener() {
+		rental_checkOut_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int customer = Integer.parseInt(ren_customerID_text.getText());
+				int customerId = Integer.parseInt(ren_customerID_text.getText());
 				int car = Integer.parseInt(ren_carID_text.getText());
 				int agency = Integer.parseInt(ren_agencyID_text.getText());
 				String insurance = ren_insurance_text.getText();
-				int insPrice = Integer.parseInt(ren_insurance_price_text.getText());
+				int insPrice;
+				//int insPrice = Integer.parseInt(ren_insurance_price_text.getText());	//insurance price is fixed $15/day
 				LocalDate startDate = LocalDate.parse(ren_start_text.getText());
 				LocalDate endDate = LocalDate.parse(ren_end_text.getText());
 				String status = ren_total_text.getText();
 				
 				Car c = dao.searchCar(car);
+				Customer customer = dao.searchCustomer(customerId);
 				int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 				
 				Dates d = new Dates(startDate, endDate, totalDays);
@@ -717,16 +723,18 @@ public class gui {
 				int underageFee = 30;
 				DataAccess dao = new DataAccess();
 				
-				if (dao.under25(customer))
+				if (dao.under25(customer.getAge()))
 				{
 					totalPrice = totalPrice + underageFee;
 				}
-				Rental rental = new Rental(customer, c, agency, insurance, insPrice, d, totalPrice, status);
-				
 				if (insurance.equals("Yes"))
 				{
+					insPrice = 15;
 					totalPrice = totalPrice + insPrice;
-				}
+				} else
+					insPrice = 0;
+				
+				Rental rental = new Rental(customerId, c, agency, insurance, insPrice, d, totalPrice, status);
 				rental.setTotalPrice(totalPrice);
 				
 				int rentalID = dao.rentalCheckOut(rental, c, d);
@@ -741,8 +749,8 @@ public class gui {
 			}
 		});
 		
-		rental_add_button.setBounds(600, 356, 55, 23);
-		frame.getContentPane().add(rental_add_button);
+		rental_checkOut_button.setBounds(600, 356, 85, 23);
+		frame.getContentPane().add(rental_checkOut_button);
 		
 		JButton rental_view_button = new JButton("View");
 		rental_view_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -782,6 +790,13 @@ public class gui {
 						car_price_text.setText(String.valueOf(car.getPrice()));
 						car_type_text.setText(car.getType());
 						car_add_button.setEnabled(false);
+						
+//						ren_contractID_text.setEditable(false);
+//						ren_customerID_text.setEditable(false);
+//						ren_start_text.setEditable(false);
+//						ren_status_text.setEditable(false);
+//						ren_total_text.setEditable(false);
+						
 					}	else 
 						JOptionPane.showMessageDialog(null, "Rental Contract not found!");
 				}	else
@@ -789,7 +804,7 @@ public class gui {
 			}
 		});
 		
-		rental_view_button.setBounds(665, 356, 55, 23);
+		rental_view_button.setBounds(700, 356, 70, 23);
 		frame.getContentPane().add(rental_view_button);		
 		
 		JLabel res_label = new JLabel("Reservation");
@@ -801,6 +816,79 @@ public class gui {
 		ren_label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ren_label.setBounds(660, 8, 55, 14);
 		frame.getContentPane().add(ren_label);
+		
+		JButton rental_checkIn_button = new JButton("Check In");
+		rental_checkIn_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_checkIn_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!ren_contractID_text.getText().isEmpty()){		
+					int rentalNumber = Integer.parseInt(ren_contractID_text.getText());
+					int milesIn = Integer.parseInt((JOptionPane.showInputDialog("Enter the miles on the car")));
+					System.out.println(milesIn);
+				} else {
+					JOptionPane.showMessageDialog(null, "Not a valid contract number");
+				}
+				
+			}
+		});
+		rental_checkIn_button.setBounds(600, 390, 85, 23);
+		frame.getContentPane().add(rental_checkIn_button);
+		
+		rental_modify_button = new JButton("Mod");
+		rental_modify_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int customerId, agencyId, totalDays, carId, insurancePrice;
+				String insurance, status;
+				LocalDate startDate, endDate;
+				int rentalNumber = Integer.parseInt(ren_contractID_text.getText());
+				
+				
+				customerId = Integer.parseInt(ren_customerID_text.getText());
+				carId = Integer.parseInt(ren_carID_text.getText());
+				agencyId = Integer.parseInt(ren_agencyID_text.getText());
+				insurance = ren_insurance_text.getText();
+				
+				//insurancePrice = Integer.parseInt(ren_insurance_price_text.getText());
+				startDate = LocalDate.parse(ren_start_text.getText());
+				endDate = LocalDate.parse(ren_end_text.getText());
+				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
+				status = ren_status_text.getText();
+				
+				Dates dates = new Dates(startDate, endDate, totalDays);
+				Customer customer = dao.searchCustomer(customerId);
+				Car car = dao.searchCar(carId);
+				
+				int totalPrice = (car.getPrice() * totalDays);
+				int underageFee = 30;
+				
+				if (dao.under25(customer.getAge()))
+				{
+					totalPrice = totalPrice + underageFee;
+				}
+				
+				
+				if (insurance.equals("Yes"))
+				{
+					insurancePrice = 15;
+					totalPrice = totalPrice + insurancePrice;
+				} else 
+					insurancePrice = 0;
+				
+				
+				Rental newRental = new Rental(customerId, car, agencyId, insurance, insurancePrice, dates, totalPrice, status);
+				dao.updateRental(rentalNumber, newRental, car, dates);
+				
+				JOptionPane.showMessageDialog(null, "Updated Rental");
+				
+				
+				
+				
+			}
+		});
+		rental_modify_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		rental_modify_button.setBounds(700, 390, 70, 23);
+		frame.getContentPane().add(rental_modify_button);
 
 		
 		

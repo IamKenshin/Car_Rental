@@ -772,6 +772,39 @@ public class DataAccess {
 	 * @param rentalId - existing rentalId
 	 * @param newRental - Rental object with updated information
 	 */
+//	public void updateRental(int rentalId, Rental newRental, Car newCar, Dates newDates){
+//		//Rental oldRental = searchRental(rentalId);
+//		
+//		try{
+//			String sql = "UPDATE RENTAL SET "
+//					+ "customer=?,car=?,milesOut=?, MilesIn=?, Agency=?, Insurance=?, InsurancePrice=?, "
+//					+ "StartDate=?, EndDate=?, TotalDays=?, TotalPrice=?, RentalStatus=? where ContractNumber=?";
+//			PreparedStatement prepStmt = myConn.prepareStatement(sql);
+//			prepStmt.setInt(1, newRental.getCustomerId());
+//			prepStmt.setInt(2, newRental.getCarId());
+//			prepStmt.setInt(3, newCar.getMileage());
+//			prepStmt.setInt(4, 0);	//set milesin as 0 at checkout. this is populated in rentalcheckin
+//			prepStmt.setInt(5, newRental.getAgencyId());
+//			prepStmt.setString(6, newRental.getInsurance());
+//			prepStmt.setInt(7, newRental.getInsurancePrice());
+//			prepStmt.setDate(8, java.sql.Date.valueOf(newDates.getStartDate()));
+//			prepStmt.setDate(9, java.sql.Date.valueOf(newDates.getEndDate()));
+//			prepStmt.setInt(10, newDates.getTotalDays());
+//			prepStmt.setInt(11, newRental.getTotalPrice());
+//			prepStmt.setString(12,  "onRent");
+//			prepStmt.setInt(13, rentalId);
+//			
+//			int count = prepStmt.executeUpdate();
+//			if (count != 0)
+//				System.out.println("updated with new rental");
+//			
+//		} catch (SQLException e){
+//			e.printStackTrace();
+//		}
+//
+//		
+//	}
+	
 	public void updateRental(int rentalId, Rental newRental, Car newCar, Dates newDates){
 		//Rental oldRental = searchRental(rentalId);
 		
