@@ -740,8 +740,8 @@ public class gui {
 				
 				customerId = Integer.parseInt(res_cust_text.getText());
 				agencyId = Integer.parseInt(res_agency_text.getText());
-				startDate = LocalDate.parse(res_start_text.getText());
-				endDate = LocalDate.parse(res_end_text.getText());
+				startDate = LocalDate.parse(res_start_text.getText(), sdf);
+				endDate = LocalDate.parse(res_end_text.getText(), sdf);
 				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 				Dates dates = new Dates(startDate, endDate, totalDays);
 				
@@ -805,8 +805,8 @@ public class gui {
 				if (res != null){
 					res_cust_text.setText(String.valueOf(res.getCustomerId()));
 					res_agency_text.setText(String.valueOf(res.getAgencyId()));
-					res_start_text.setText(res.getStartDate().toString());
-					res_end_text.setText(res.getEndDate().toString());
+					res_start_text.setText(String.valueOf(res.getStartDate().format(sdf)));
+					res_end_text.setText(String.valueOf(res.getStartDate().format(sdf)));
 					res_total_text.setText(String.valueOf(res.getTotalDays()));
 					res_id_text.setText(String.valueOf(res.getReservationNumber()));
 					
