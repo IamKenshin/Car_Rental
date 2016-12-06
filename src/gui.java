@@ -5,7 +5,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import javax.naming.directory.SearchResult;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class gui {
 
@@ -56,8 +59,8 @@ public class gui {
 	private JTextField ren_agencyID_text;
 	private JTextField ren_insurance_text;
 	private JTextField ren_insurance_price_text;
-	private JTextField ren_start_text;
-	private JTextField ren_end_text;
+	//private JTextField ren_start_text;
+	//private JTextField ren_end_text;
 	private JTextField ren_status_text;
 	private JTextField ren_total_text;
 
@@ -72,6 +75,7 @@ public class gui {
 	private JLabel ren_total_label;
 	private JLabel ren_status_label;
 	private JButton rental_modify_button;
+	private JButton clear_button;
 	
 			
 
@@ -107,6 +111,8 @@ public class gui {
 		frame.setBounds(100, 100, 932, 606);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		
 		/*
 		 * 
@@ -498,6 +504,8 @@ public class gui {
 		frame.getContentPane().add(res_id_text);
 		res_id_text.setColumns(10);
 		
+		
+		
 		JButton res_add_button = new JButton("Add");
 		res_add_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -506,8 +514,8 @@ public class gui {
 				
 				customerId = Integer.parseInt(res_cust_text.getText());
 				agencyId = Integer.parseInt(res_agency_text.getText());
-				startDate = LocalDate.parse(res_start_text.getText());
-				endDate = LocalDate.parse(res_end_text.getText());
+				startDate = LocalDate.parse(res_start_text.getText(), sdf);
+				endDate = LocalDate.parse(res_end_text.getText(), sdf);
 				totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay());
 				Dates dates = new Dates(startDate, endDate, totalDays);
 				
@@ -571,8 +579,8 @@ public class gui {
 				if (res != null){
 					res_cust_text.setText(String.valueOf(res.getCustomerId()));
 					res_agency_text.setText(String.valueOf(res.getAgencyId()));
-					res_start_text.setText(res.getStartDate().toString());
-					res_end_text.setText(res.getEndDate().toString());
+					res_start_text.setText(res.getStartDate().format(sdf));
+					res_end_text.setText(res.getEndDate().format(sdf));
 					res_total_text.setText(String.valueOf(res.getTotalDays()));
 					res_id_text.setText(String.valueOf(res.getReservationNumber()));
 					
@@ -637,15 +645,27 @@ public class gui {
 		ren_insurance_price_text.setColumns(10);
 		ren_insurance_price_text.setEditable(false);
 		
-		ren_start_text= new JTextField();
-		ren_start_text.setBounds(700, 217, 68, 20);
+		JFormattedTextField ren_start_text = new JFormattedTextField(sdf);
+		ren_start_text.setBounds(700, 218, 68, 20);
 		frame.getContentPane().add(ren_start_text);
 		ren_start_text.setColumns(10);
+		ren_start_text.setText("");
 		
-		ren_end_text= new JTextField();
-		ren_end_text.setBounds(700, 250, 68, 20);
+		JFormattedTextField ren_end_text = new JFormattedTextField(sdf);
+		ren_end_text.setBounds(700, 249, 68, 20);
 		frame.getContentPane().add(ren_end_text);
 		ren_end_text.setColumns(10);
+		ren_end_text.setText("");
+		
+//		ren_start_text= new JTextField();
+//		ren_start_text.setBounds(700, 217, 68, 20);
+//		frame.getContentPane().add(ren_start_text);
+//		ren_start_text.setColumns(10);
+//		
+//		ren_end_text= new JTextField();
+//		ren_end_text.setBounds(700, 250, 68, 20);
+//		frame.getContentPane().add(ren_end_text);
+//		ren_end_text.setColumns(10);
 		
 		ren_status_text= new JTextField();
 		ren_status_text.setBounds(700, 280, 68, 20);
@@ -711,8 +731,8 @@ public class gui {
 				String insurance = ren_insurance_text.getText();
 				int insPrice;
 				//int insPrice = Integer.parseInt(ren_insurance_price_text.getText());	//insurance price is fixed $15/day
-				LocalDate startDate = LocalDate.parse(ren_start_text.getText());
-				LocalDate endDate = LocalDate.parse(ren_end_text.getText());
+				LocalDate startDate = LocalDate.parse(ren_start_text.getText(), sdf);
+				LocalDate endDate = LocalDate.parse(ren_end_text.getText(), sdf);
 				String status = ren_total_text.getText();
 				
 				Car c = dao.searchCar(car);
@@ -865,8 +885,8 @@ public class gui {
 						ren_agencyID_text.setText(String.valueOf(r.getAgencyId()));
 						ren_insurance_text.setText(r.getInsurance());
 						ren_insurance_price_text.setText(String.valueOf(r.getInsurancePrice()));
-						ren_start_text.setText(r.getStartDate().toString());
-						ren_end_text.setText(r.getEndDate().toString());
+						ren_start_text.setText(r.getStartDate().format(sdf));
+						ren_end_text.setText(r.getEndDate().format(sdf));
 						ren_status_text.setText(r.getStatus());
 						ren_total_text.setText(String.valueOf(r.getTotalPrice()));
 						
@@ -909,6 +929,48 @@ public class gui {
 		
 		rental_view_button.setBounds(700, 356, 70, 23);
 		frame.getContentPane().add(rental_view_button);	
+		
+		clear_button = new JButton("Clear All");
+		clear_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		clear_button.setBounds(23, 443, 89, 23);
+		frame.getContentPane().add(clear_button);
+		
+		JButton car_min_button = new JButton("MINYEAR");
+		car_min_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_min_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getOldestCarYear(), "Oldest Car Year", 1);
+			}
+		});
+		
+		car_min_button.setBounds(221, 350, 60, 23);
+		frame.getContentPane().add(car_min_button);
+		
+		JButton car_max_button = new JButton("MAXYEAR");
+		car_max_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_max_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getNewestCarYear(), "Newest Car Year", 1);
+			}
+		});
+		
+		car_max_button.setBounds(275, 350, 60, 23);
+		frame.getContentPane().add(car_max_button);
+		
+		JButton car_avg_button = new JButton("AVGYEAR");
+		car_avg_button.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		car_avg_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, dao.getAverageCarYear(), "Average Car Year", 1);
+			}
+		});
+		
+		car_avg_button.setBounds(330, 350, 60, 23);
+		frame.getContentPane().add(car_avg_button);
 		
 		
 	}

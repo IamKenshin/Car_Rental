@@ -1,8 +1,8 @@
 
 public class Customer {
 	
-	private int customerId, age;
-	private String fName, lName, licenceNumber, ccNumber, customerStatus;
+	private int customerId, year, age;
+	private String fName, lName, licenceNumber, ccNumber, make, model, customerStatus;
 	
 	public Customer(String fName, String lName, int age, String licenceNumber, String ccNumber, String status) {
 		super();
@@ -13,8 +13,19 @@ public class Customer {
 		this.ccNumber = ccNumber;
 		this.customerStatus = status;
 	}
-	
 
+
+	public Customer(String make, String model, int year, String fName, String lName, int age) {
+		super();
+		this.fName = fName;
+		this.lName = lName;
+		this.age = age;
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		
+		// TODO Auto-generated constructor stub
+	}
 
 
 	public int getCustomerId() {
